@@ -9,7 +9,6 @@ public class Movie {
     private String description;
     // TODO add more properties here
 
-
     private List<Genre> genres;
 
     public enum Genre {
@@ -36,10 +35,6 @@ public class Movie {
     }
 
 
-
-
-
-
     public Movie(String title, String description, List <Genre> genres) {
         this.title = title;
         this.description = description;
@@ -63,12 +58,10 @@ public class Movie {
         List<Movie> movies = new ArrayList<>();
         // TODO add some dummy data here
 
-
         movies.add(new Movie("Midnight Escape", "A group of friends embark on a dangerous journey to break out of a maximum-security prison in order to clear their names.", Arrays.asList(Genre.ACTION, Genre.DRAMA)));
         movies.add(new Movie("Lost Treasure of the Amazon", "A team of explorers search for a legendary treasure in the heart of the Amazon jungle, but they soon realize that they are not alone.", Arrays.asList(Genre.ACTION, Genre.HORROR)));
-
-
-
+        movies.add(new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Genre.ROMANCE, Genre.DRAMA)));
+        movies.add(new Movie("Saw", "A very bloody film about people who have to cut off their limbs.", Arrays.asList(Genre.HORROR)));
 
 
         return movies;
