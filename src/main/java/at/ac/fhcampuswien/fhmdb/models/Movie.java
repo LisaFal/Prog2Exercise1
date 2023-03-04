@@ -58,6 +58,11 @@ public class Movie {
         // TODO add some dummy data here
 
 
+        movies.add(new Movie("Midnight Escape", "A group of friends embark on a dangerous journey to break out of a maximum-security prison in order to clear their names."));
+
+
+
+
 
         return movies;
     }
