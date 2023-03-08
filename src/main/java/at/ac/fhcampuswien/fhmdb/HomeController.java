@@ -51,9 +51,12 @@ public class HomeController implements Initializable {
 
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
+
         searchBtn.setOnAction(e -> {
             if(genreComboBox.getSelectionModel().getSelectedItem() != null)
-                if(!genreComboBox.getSelectionModel().getSelectedItem().equals("--NO FILTER--")) {
+                if(genreComboBox.getSelectionModel().getSelectedItem().equals("--NO FILTER--")) {
+                    observableMovies.setAll(allMovies);
+                } else {
                     observableMovies.clear();
                     movieListView.layout();
                     for(Movie m : allMovies) {
@@ -65,6 +68,7 @@ public class HomeController implements Initializable {
                     }
                 }
         });
+
 
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
