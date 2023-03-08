@@ -12,6 +12,8 @@ public class Movie {
     private List<Genre> genres;
 
     public enum Genre {
+
+        CLEAR_FILTER,
         ACTION,
         ADVENTURE,
         ANIMATION,
@@ -77,4 +79,21 @@ public class Movie {
 
         return movies;
     }
+
+
+    public static List<Movie> filter(List<Movie> movies, Movie.Genre genre) {
+        if (genre == null || genre == Genre.CLEAR_FILTER) {
+            return movies;
+        }
+
+        List<Movie> filteredMovies = new ArrayList<>();
+        for (Movie movie : movies) {
+            if (movie.getGenres().contains(genre)) {
+                filteredMovies.add(movie);
+            }
+        }
+
+        return filteredMovies;
+    }
+
 }

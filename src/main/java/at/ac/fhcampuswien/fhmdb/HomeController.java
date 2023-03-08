@@ -46,28 +46,20 @@ public class HomeController implements Initializable {
 
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
         genreComboBox.setPromptText("Filter by Genre");
-        genreComboBox.getItems().add("--NO FILTER--");
         genreComboBox.getItems().addAll(Movie.Genre.values()); //comboBox filled with Genre values (enum)
 
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
 
+
         searchBtn.setOnAction(e -> {
-            if(genreComboBox.getSelectionModel().getSelectedItem() != null)
-                if(genreComboBox.getSelectionModel().getSelectedItem().equals("--NO FILTER--")) {
-                    observableMovies.setAll(allMovies);
-                } else {
-                    observableMovies.clear();
-                    movieListView.layout();
-                    for(Movie m : allMovies) {
-                        for(Movie.Genre g : m.getGenres()) {
-                            if(g.equals(genreComboBox.getSelectionModel().getSelectedItem())) {
-                                observableMovies.add(m);
-                            }
-                        }
-                    }
-                }
+            Movie.Genre selectedGenre = (Movie.Genre) genreComboBox.getSelectionModel().getSelectedItem();
+            List<Movie> filteredMovies = Movie.filter(allMovies, selectedGenre);
+            observableMovies.setAll(filteredMovies);
+
         });
+
+
 
 
         // Sort button example:
