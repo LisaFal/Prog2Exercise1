@@ -1,5 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
+import at.ac.fhcampuswien.fhmdb.HomeController;
+
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,7 @@ public class Movie {
     }
 
 
-    public Movie(String title, String description, List <Genre> genres) {
+    public Movie(String title, String description, List<Genre> genres) {
         this.title = title;
         this.description = description;
         this.genres = genres;
@@ -59,7 +61,7 @@ public class Movie {
         return genres;
     }
 
-    public static List<Movie> initializeMovies(){
+    public static List<Movie> initializeMovies() {
         List<Movie> movies = new ArrayList<>();
         // TODO add some dummy data here
 
@@ -97,6 +99,17 @@ public class Movie {
         }
 
         return filteredMovies;
+    }
+
+
+    public static List<Movie> sortingAsc(List<Movie> list) {
+        list.sort(Comparator.comparing(Movie::getTitle));
+        return list;
+    }
+
+    public static List<Movie> sortingDes(List<Movie> list) {
+        list.sort(Comparator.comparing(Movie::getTitle).reversed());
+        return list;
     }
 
 }

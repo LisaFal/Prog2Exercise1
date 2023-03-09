@@ -63,23 +63,20 @@ public class HomeController implements Initializable {
         });
 
 
+        //sorting(observableMovies);
 
-        sorting();
-    }
-
-
-    public void sorting() {
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
-                observableMovies.sort(Comparator.comparing(Movie::getTitle));
+                Movie.sortingAsc(observableMovies);
                 // TODO sort observableMovies ascending
                 sortBtn.setText("Sort (desc)");
             } else {
-                observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+                Movie.sortingDes(observableMovies);
                 // TODO sort observableMovies descending
                 sortBtn.setText("Sort (asc)");
             }
         });
+
     }
 }
