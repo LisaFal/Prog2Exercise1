@@ -3,6 +3,8 @@ package at.ac.fhcampuswien.fhmdb.models;
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
+
 
 public class Movie {
     private String title;
@@ -10,6 +12,7 @@ public class Movie {
     // TODO add more properties here
 
     private List<Genre> genres;
+
 
     public enum Genre {
 

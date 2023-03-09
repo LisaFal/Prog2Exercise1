@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MovieTest {
 
     @Test
-    void test () {
+    void test_initialize_movie_list () {
 
 
 

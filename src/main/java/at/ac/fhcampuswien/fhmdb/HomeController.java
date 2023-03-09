@@ -7,14 +7,16 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
+import static java.util.Collections.*;
+import static java.util.Collections.sort;
 
 public class HomeController implements Initializable {
     @FXML
@@ -46,6 +48,7 @@ public class HomeController implements Initializable {
 
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
         genreComboBox.setPromptText("Filter by Genre");
+        genreComboBox.getItems().add("--NO FILTER--");
         genreComboBox.getItems().addAll(Movie.Genre.values()); //comboBox filled with Genre values (enum)
 
         // TODO add event handlers to buttons and call the regarding methods
@@ -61,13 +64,19 @@ public class HomeController implements Initializable {
 
 
 
+        sorting();
+    }
 
+
+    public void sorting() {
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
+                observableMovies.sort(Comparator.comparing(Movie::getTitle));
                 // TODO sort observableMovies ascending
                 sortBtn.setText("Sort (desc)");
             } else {
+                observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
                 // TODO sort observableMovies descending
                 sortBtn.setText("Sort (asc)");
             }
