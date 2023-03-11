@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.*;
 
+import static at.ac.fhcampuswien.fhmdb.models.Movie.Genre.CLEAR_FILTER;
 import static java.util.Collections.*;
 import static java.util.Collections.sort;
 
@@ -38,6 +40,8 @@ public class HomeController implements Initializable {
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         observableMovies.addAll(allMovies);         // add dummy data to observable list
@@ -58,12 +62,16 @@ public class HomeController implements Initializable {
         searchBtn.setOnAction(e -> {
             Movie.Genre selectedGenre = (Movie.Genre) genreComboBox.getSelectionModel().getSelectedItem();
             List<Movie> filteredMovies = Movie.filter(allMovies, selectedGenre);
+            if (searchField.getText() != "") {
+                filteredMovies = Movie.search(searchField.getText(), filteredMovies); //search within filteredMovies
+            }
+            if (selectedGenre.equals(CLEAR_FILTER)) {
+                searchField.setText(""); //clears searchField, if CLEAR_FILTER is set
+            }
             observableMovies.setAll(filteredMovies);
 
         });
 
-
-        //sorting(observableMovies);
 
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {

@@ -1,7 +1,5 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
-import at.ac.fhcampuswien.fhmdb.HomeController;
-
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,5 +109,18 @@ public class Movie {
         list.sort(Comparator.comparing(Movie::getTitle).reversed());
         return list;
     }
+
+   public static List <Movie> search(String searchWord, List<Movie> movies) {
+       List<Movie> resultSearch = new ArrayList<>();
+        for (Movie movie : movies)  {
+            String title = movie.getTitle().toLowerCase();
+            String description = movie.getDescription().toLowerCase();
+            String searchWordLowerCase = searchWord.toLowerCase();
+           if(title.contains(searchWordLowerCase) || description.contains(searchWordLowerCase)) {
+               resultSearch.add(movie);
+           }
+       }
+        return resultSearch;
+   }
 
 }
