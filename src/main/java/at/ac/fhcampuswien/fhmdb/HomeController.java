@@ -7,18 +7,12 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.*;
-
-import static at.ac.fhcampuswien.fhmdb.models.Movie.Genre.CLEAR_FILTER;
-import static java.util.Collections.*;
-import static java.util.Collections.sort;
 
 public class HomeController implements Initializable {
     @FXML
@@ -50,38 +44,30 @@ public class HomeController implements Initializable {
         movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
 
-        // TODO add genre filter items with genreComboBox.getItems().addAll(...)
+        // adding genre filter items
         genreComboBox.setPromptText("Filter by Genre");
-        genreComboBox.getItems().add("--NO FILTER--");
+        genreComboBox.getItems().add("-- NO FILTER --");
         genreComboBox.getItems().addAll(Movie.Genre.values()); //comboBox filled with Genre values (enum)
 
-        // TODO add event handlers to buttons and call the regarding methods
-        // either set event handlers in the fxml file (onAction) or add them here
-
-
+        // adding event handlers to search button
         searchBtn.setOnAction(e -> {
-            Movie.Genre selectedGenre = (Movie.Genre) genreComboBox.getSelectionModel().getSelectedItem();
+            Movie.Genre selectedGenre = null;
+            if(genreComboBox.getSelectionModel().getSelectedItem() != null && !genreComboBox.getSelectionModel().getSelectedItem().equals("-- NO FILTER --"))
+                selectedGenre = (Movie.Genre) genreComboBox.getSelectionModel().getSelectedItem();
             List<Movie> filteredMovies = Movie.filter(allMovies, selectedGenre);
             if (searchField.getText() != "") {
                 filteredMovies = Movie.search(searchField.getText(), filteredMovies); //search within filteredMovies
             }
-            if (selectedGenre.equals(CLEAR_FILTER)) {
-                searchField.setText(""); //clears searchField, if CLEAR_FILTER is set
-            }
             observableMovies.setAll(filteredMovies);
-
         });
 
-
-        // Sort button example:
+        // Sort button
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
                 Movie.sortingAsc(observableMovies);
-                // TODO sort observableMovies ascending
                 sortBtn.setText("Sort (desc)");
             } else {
                 Movie.sortingDes(observableMovies);
-                // TODO sort observableMovies descending
                 sortBtn.setText("Sort (asc)");
             }
         });
