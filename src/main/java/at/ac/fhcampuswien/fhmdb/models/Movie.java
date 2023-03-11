@@ -9,14 +9,9 @@ import java.util.Comparator;
 public class Movie {
     private String title;
     private String description;
-    // TODO add more properties here
-
     private List<Genre> genres;
-
-
     public enum Genre {
 
-        CLEAR_FILTER,
         ACTION,
         ADVENTURE,
         ANIMATION,
@@ -61,7 +56,6 @@ public class Movie {
 
     public static List<Movie> initializeMovies() {
         List<Movie> movies = new ArrayList<>();
-        // TODO add some dummy data here
 
         movies.add(new Movie("Midnight Escape", "A group of friends embark on a dangerous journey to break out of a maximum-security prison in order to clear their names.", Arrays.asList(Genre.ACTION, Genre.DRAMA)));
         movies.add(new Movie("Lost Treasure of the Amazon", "A team of explorers search for a legendary treasure in the heart of the Amazon jungle, but they soon realize that they are not alone.", Arrays.asList(Genre.ACTION, Genre.HORROR)));
@@ -79,13 +73,12 @@ public class Movie {
         movies.add(new Movie("The Iron Horsemen", "A gripping western about a lone rider who seeks revenge against the corrupt officials who wronged him.", Arrays.asList(Genre.HORROR, Genre.WESTERN, Genre.WAR)));
         movies.add(new Movie("Murder on the Nile", "A classic whodunit mystery set on a luxury cruise ship sailing down the Nile river.", Arrays.asList(Genre.MYSTERY, Genre.ADVENTURE, Genre.CRIME)));
 
-
         return movies;
     }
 
 
     public static List<Movie> filter(List<Movie> movies, Movie.Genre genre) {
-        if (genre == null || genre == Genre.CLEAR_FILTER) {
+        if (genre == null) {
             return movies;
         }
 

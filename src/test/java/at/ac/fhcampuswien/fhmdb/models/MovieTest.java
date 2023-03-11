@@ -1,7 +1,5 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
-import at.ac.fhcampuswien.fhmdb.HomeController;
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
