@@ -77,4 +77,17 @@ class MovieTest {
 
     }
 
+    @Test
+    public void test_filter_by_genre_action() {
+        // given
+        List<Movie> movies = Movie.initializeMovies();
+        List<Movie> expected = Arrays.asList( movies.get(0), movies.get(1) );
+
+        // when
+        List<Movie> filteredMovies = Movie.filter(movies, Movie.Genre.ACTION);
+
+        // then
+        assertEquals(expected, filteredMovies);
+    }
+
 }
