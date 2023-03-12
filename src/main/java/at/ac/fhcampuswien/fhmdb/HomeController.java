@@ -51,14 +51,7 @@ public class HomeController implements Initializable {
 
         // adding event handlers to search button
         searchBtn.setOnAction(e -> {
-            Movie.Genre selectedGenre = null;
-            if(genreComboBox.getSelectionModel().getSelectedItem() != null && !genreComboBox.getSelectionModel().getSelectedItem().equals("-- NO FILTER --"))
-                selectedGenre = (Movie.Genre) genreComboBox.getSelectionModel().getSelectedItem();
-            List<Movie> filteredMovies = Movie.filter(allMovies, selectedGenre);
-            if (searchField.getText() != "") {
-                filteredMovies = Movie.search(searchField.getText(), filteredMovies); //search within filteredMovies
-            }
-            observableMovies.setAll(filteredMovies);
+            observableMovies.setAll(filterMovies(genreComboBox.getSelectionModel().getSelectedItem(), searchField.getText()));
         });
 
         // Sort button
@@ -72,5 +65,15 @@ public class HomeController implements Initializable {
             }
         });
 
+    }
+    public List<Movie> filterMovies(Object genre, String searchString) {
+        Movie.Genre selectedGenre = null;
+        if(genre != null && (genre instanceof Movie.Genre))
+            selectedGenre = (Movie.Genre) genre;
+        List<Movie> filteredMovies = Movie.filter(allMovies, selectedGenre);
+        if (searchString != "") {
+            filteredMovies = Movie.search(searchString, filteredMovies); //search within filteredMovies
+        }
+        return  filteredMovies;
     }
 }

@@ -115,5 +115,17 @@ public class Movie {
        }
         return resultSearch;
    }
+   @Override
+    public boolean equals(Object o) {
+        if(o == this)
+            return true;
+        if(!(o instanceof Movie))
+            return false;
+        Movie m = (Movie) o;
+        if(m.getGenres().equals(getGenres()) && m.getTitle().equals(getTitle()) && m.getDescription().equals(getDescription())) {
+            return true;
+        }
+        return false;
+   }
 
 }
