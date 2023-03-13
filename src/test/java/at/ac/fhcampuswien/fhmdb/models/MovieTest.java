@@ -20,13 +20,22 @@ class MovieTest {
         movieList.add(new Movie("A short title", "description", Arrays.asList(Movie.Genre.ACTION)));
 //when
         Movie.sortingAsc(movieList);
-
 //then
         List<Movie> expectedList = new ArrayList<>();
         expectedList.add(new Movie("A short title", "description", Arrays.asList(Movie.Genre.ACTION)));
         expectedList.add(new Movie("No short title", "description", Arrays.asList(Movie.Genre.HORROR)));
-        assertEquals(expectedList.get(0).getTitle(), movieList.get(0).getTitle());
-        assertEquals(expectedList.get(1).getTitle(), movieList.get(1).getTitle());
+        assertEquals(expectedList, movieList);
+    }
+
+    @Test
+    void sorting_with_one_entry() {
+        //given
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(new Movie("No short title", "description", Arrays.asList(Movie.Genre.HORROR)));
+        //when
+        List<Movie> expectedList = Movie.sortingAsc(movieList);
+        //then
+        assertEquals(expectedList, movieList);
     }
 
 
@@ -46,9 +55,7 @@ class MovieTest {
         expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Movie.Genre.ACTION)));
         expectedList.add(new Movie("A short title", "description", Arrays.asList(Movie.Genre.ACTION)));
 
-        assertEquals(expectedList.get(0).getTitle(), movieList.get(0).getTitle());
-        assertEquals(expectedList.get(1).getTitle(), movieList.get(1).getTitle());
-        assertEquals(expectedList.get(2).getTitle(), movieList.get(2).getTitle());
+        assertEquals(expectedList, movieList);
     }
 
 
@@ -63,7 +70,7 @@ class MovieTest {
         List<Movie> expectedList = new ArrayList<>();
         expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Movie.Genre.ACTION)));
 
-        assertEquals(expectedList.get(0).getTitle(), search(testSearch, movieList).get(0).getTitle());
+        assertEquals(expectedList, search(testSearch, movieList));
     }
 
     @Test
@@ -79,8 +86,7 @@ class MovieTest {
         List<Movie> expectedList = new ArrayList<>();
         expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Movie.Genre.ACTION)));
         expectedList.add(new Movie("Out of good titles!", "Maybe a description here?", Arrays.asList(Movie.Genre.DRAMA)));
-        assertEquals(expectedList.get(0).getTitle(), search(testSearch, movieList).get(0).getTitle());
-        assertEquals(expectedList.get(1).getTitle(), search(testSearch, movieList).get(1).getTitle());
+        assertEquals(expectedList, search(testSearch, movieList));
     }
 
     @Test
