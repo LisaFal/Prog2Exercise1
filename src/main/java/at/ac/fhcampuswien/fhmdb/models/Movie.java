@@ -122,10 +122,11 @@ public class Movie {
         if(!(o instanceof Movie))
             return false;
         Movie m = (Movie) o;
-        if(m.getGenres().equals(getGenres()) && m.getTitle().equals(getTitle()) && m.getDescription().equals(getDescription())) {
-            return true;
-        }
-        return false;
+       return m.getGenres().equals(getGenres()) && m.getTitle().equals(getTitle()) && m.getDescription().equals(getDescription());
+   }
+   @Override
+    public String toString() {
+        return title;
    }
 
 }
