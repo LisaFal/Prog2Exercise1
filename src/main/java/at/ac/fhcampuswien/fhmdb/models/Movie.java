@@ -77,6 +77,7 @@ public class Movie {
     }
 
 
+
     public static List<Movie> filter(List<Movie> movies, Movie.Genre genre) {
         if (genre == null) {
             return movies;

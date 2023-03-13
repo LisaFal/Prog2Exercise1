@@ -123,4 +123,31 @@ class MovieTest {
         assertEquals(expected, filteredMovies);
     }
 
+    @Test
+    public void test_filter_by_genre_western() {
+        // given
+        List<Movie> movies = Movie.initializeMovies();
+        List<Movie> expected = Arrays.asList( movies.get(12), movies.get(13));
+
+        // when
+        List<Movie> filteredMovies = Movie.filter(movies, Movie.Genre.WESTERN);
+
+        // then
+        assertEquals(expected, filteredMovies);
+    }
+
+    @Test
+    public void test_filter_by_genre_crime() {
+        // given
+        List<Movie> movies = Movie.initializeMovies();
+        List<Movie> expected = Arrays.asList( movies.get(3), movies.get(5), movies.get(9), movies.get(14) );
+
+        // when
+        List<Movie> filteredMovies = Movie.filter(movies, Movie.Genre.CRIME);
+
+        // then
+        assertEquals(expected, filteredMovies);
+    }
+
+
 }
