@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HomeControllerTest {
 
+
     @Test
     void filterMovies_empty_textfield_and_no_genre_selected_returns_all_movies() {
         // given
@@ -20,8 +22,8 @@ class HomeControllerTest {
         // when
         List<Movie> movies = hc.filterMovies(null, "");
 
-        //then
-        assertArrayEquals(expectedMovies.toArray(), movies.toArray());
+        // then
+        assertEquals(expectedMovies, movies);
     }
     @Test
     void filterMovies_empty_textfield_and_String_selected_returns_all_movies() {
@@ -32,7 +34,7 @@ class HomeControllerTest {
         // when
         List<Movie> movies = hc.filterMovies("-- NO FILTER --", "");
 
-        //then
+        // then
         assertArrayEquals(expectedMovies.toArray(), movies.toArray());
     }
     @Test
@@ -44,7 +46,7 @@ class HomeControllerTest {
         // when
         List<Movie> movies = hc.filterMovies(null, "l");
 
-        //then
+        // then
         assertArrayEquals(expectedMovies.toArray(), movies.toArray());
     }
     @Test
@@ -59,7 +61,7 @@ class HomeControllerTest {
         List<Movie> movies = hc.filterMovies(Movie.Genre.ACTION, "");
 
 
-        //then
+        // then
         assertArrayEquals(expectedMovies.toArray(), movies.toArray());
     }
     @Test
@@ -73,7 +75,7 @@ class HomeControllerTest {
         List<Movie> movies = hc.filterMovies(Movie.Genre.ROMANCE, "Titanic");
 
 
-        //then
+        // then
         assertArrayEquals(expectedMovies.toArray(), movies.toArray());
     }
     @Test
@@ -87,7 +89,7 @@ class HomeControllerTest {
         List<Movie> movies = hc.filterMovies(Movie.Genre.DRAMA, "Titanic");
 
 
-        //then
+        // then
         assertArrayEquals(expectedMovies.toArray(), movies.toArray());
     }
     @Test
@@ -100,7 +102,7 @@ class HomeControllerTest {
         List<Movie> movies = hc.filterMovies(Movie.Genre.ACTION, "Titanic");
 
 
-        //then
+        // then
         assertArrayEquals(expectedMovies.toArray(), movies.toArray());
     }
 

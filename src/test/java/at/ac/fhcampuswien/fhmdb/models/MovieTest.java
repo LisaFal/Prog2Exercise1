@@ -142,20 +142,51 @@ class MovieTest {
         assertEquals(expected, filteredMovies);
     }
 
-
-
     @Test
-    void test_filter_wrong_movie_for_genre_crime() {
+    void equals_same_object_reference() {
         // given
-        List<Movie> movies = Movie.initializeMovies();
-        List<Movie> expected = Arrays.asList( movies.get(0), movies.get(1) );
+        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
 
         // when
-        List<Movie> filteredMovies = Movie.filter(movies, Movie.Genre.CRIME);
+        Movie sameMovie = movie;
 
         // then
-        assertNotEquals(expected, filteredMovies);
+        assertTrue(movie.equals(sameMovie));
     }
+    @Test
+    void equals_same_object() {
+        // given
+        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
+
+        // when
+        Movie sameMovie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
+
+        // then
+        assertTrue(movie.equals(sameMovie));
+    }
+    @Test
+    void equals_no_movie() {
+        // given
+        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
+
+        // when
+        String noMovie = "not a movie!";
+
+        // then
+        assertFalse(movie.equals(noMovie));
+    }
+    @Test
+    void equals_not_same_movie() {
+        // given
+        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
+
+        // when
+        Movie differentMovie = new Movie("The Sound of Silence", "A drama about a young musician who struggles to come to terms with his deafness, and must find a new way to connect with the world and his art.", Arrays.asList(Movie.Genre.DRAMA, Movie.Genre.SCIENCE_FICTION));
+
+        // then
+        assertFalse(movie.equals(differentMovie));
+    }
+
 
 
 

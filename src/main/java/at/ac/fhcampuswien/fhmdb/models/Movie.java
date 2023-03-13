@@ -125,9 +125,5 @@ public class Movie {
         Movie m = (Movie) o;
        return m.getGenres().equals(getGenres()) && m.getTitle().equals(getTitle()) && m.getDescription().equals(getDescription());
    }
-   @Override
-    public String toString() {
-        return title;
-   }
 
 }
