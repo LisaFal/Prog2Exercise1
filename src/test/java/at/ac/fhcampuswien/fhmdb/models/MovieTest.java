@@ -16,14 +16,14 @@ class MovieTest {
     void sorting_ascending_test() {
 //given
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie("No short title", "description", Arrays.asList(Movie.Genre.HORROR)));
-        movieList.add(new Movie("A short title", "description", Arrays.asList(Movie.Genre.ACTION)));
+        movieList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
+        movieList.add(new Movie("A short title", "description", Arrays.asList(Genre.ACTION)));
 //when
         Movie.sortingAsc(movieList);
 //then
         List<Movie> expectedList = new ArrayList<>();
-        expectedList.add(new Movie("A short title", "description", Arrays.asList(Movie.Genre.ACTION)));
-        expectedList.add(new Movie("No short title", "description", Arrays.asList(Movie.Genre.HORROR)));
+        expectedList.add(new Movie("A short title", "description", Arrays.asList(Genre.ACTION)));
+        expectedList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
         assertEquals(expectedList, movieList);
     }
 
@@ -31,7 +31,7 @@ class MovieTest {
     void sorting_with_one_entry() {
         //given
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie("No short title", "description", Arrays.asList(Movie.Genre.HORROR)));
+        movieList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
         //when
         List<Movie> expectedList = Movie.sortingAsc(movieList);
         //then
@@ -43,17 +43,17 @@ class MovieTest {
     void sorting_descending_test() {
 //given
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie("No short title", "description", Arrays.asList(Movie.Genre.HORROR)));
-        movieList.add(new Movie("A short title", "description", Arrays.asList(Movie.Genre.ACTION)));
-        movieList.add(new Movie("Maybe a short title", "description", Arrays.asList(Movie.Genre.ACTION)));
+        movieList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
+        movieList.add(new Movie("A short title", "description", Arrays.asList(Genre.ACTION)));
+        movieList.add(new Movie("Maybe a short title", "description", Arrays.asList(Genre.ACTION)));
 //when
         Movie.sortingDes(movieList);
 
 //then
         List<Movie> expectedList = new ArrayList<>();
-        expectedList.add(new Movie("No short title", "description", Arrays.asList(Movie.Genre.HORROR)));
-        expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Movie.Genre.ACTION)));
-        expectedList.add(new Movie("A short title", "description", Arrays.asList(Movie.Genre.ACTION)));
+        expectedList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
+        expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Genre.ACTION)));
+        expectedList.add(new Movie("A short title", "description", Arrays.asList(Genre.ACTION)));
 
         assertEquals(expectedList, movieList);
     }
@@ -64,11 +64,11 @@ class MovieTest {
         //given
         String testSearch = "maybe";
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie("Maybe a short title", "description", Arrays.asList(Movie.Genre.ACTION)));
+        movieList.add(new Movie("Maybe a short title", "description", Arrays.asList(Genre.ACTION)));
 
         //when and then
         List<Movie> expectedList = new ArrayList<>();
-        expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Movie.Genre.ACTION)));
+        expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Genre.ACTION)));
 
         assertEquals(expectedList, search(testSearch, movieList));
     }
@@ -77,15 +77,15 @@ class MovieTest {
     void search_delivers_correct_list() {
         String testSearch = "Maybe";
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie("No short title", "description", Arrays.asList(Movie.Genre.HORROR)));
-        movieList.add(new Movie("A short title", "description", Arrays.asList(Movie.Genre.ACTION)));
-        movieList.add(new Movie("Maybe a short title", "description", Arrays.asList(Movie.Genre.ACTION)));
-        movieList.add(new Movie("Out of good titles!", "Maybe a description here?", Arrays.asList(Movie.Genre.DRAMA)));
+        movieList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
+        movieList.add(new Movie("A short title", "description", Arrays.asList(Genre.ACTION)));
+        movieList.add(new Movie("Maybe a short title", "description", Arrays.asList(Genre.ACTION)));
+        movieList.add(new Movie("Out of good titles!", "Maybe a description here?", Arrays.asList(Genre.DRAMA)));
 
         //when and then
         List<Movie> expectedList = new ArrayList<>();
-        expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Movie.Genre.ACTION)));
-        expectedList.add(new Movie("Out of good titles!", "Maybe a description here?", Arrays.asList(Movie.Genre.DRAMA)));
+        expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Genre.ACTION)));
+        expectedList.add(new Movie("Out of good titles!", "Maybe a description here?", Arrays.asList(Genre.DRAMA)));
         assertEquals(expectedList, search(testSearch, movieList));
     }
 
@@ -123,7 +123,7 @@ class MovieTest {
         List<Movie> expected = Arrays.asList( movies.get(0), movies.get(1) );
 
         // when
-        List<Movie> filteredMovies = Movie.filter(movies, Movie.Genre.ACTION);
+        List<Movie> filteredMovies = Movie.filter(movies, Genre.ACTION);
 
         // then
         assertEquals(expected, filteredMovies);
@@ -136,7 +136,7 @@ class MovieTest {
         List<Movie> expected = Arrays.asList( movies.get(12), movies.get(13));
 
         // when
-        List<Movie> filteredMovies = Movie.filter(movies, Movie.Genre.WESTERN);
+        List<Movie> filteredMovies = Movie.filter(movies, Genre.WESTERN);
 
         // then
         assertEquals(expected, filteredMovies);
@@ -148,7 +148,7 @@ class MovieTest {
         List<Movie> expected = Arrays.asList( movies.get(0), movies.get(1) );
 
         // when
-        List<Movie> filteredMovies = Movie.filter(movies, Movie.Genre.CRIME);
+        List<Movie> filteredMovies = Movie.filter(movies, Genre.CRIME);
 
         // then
         assertNotEquals(expected, filteredMovies);
@@ -157,7 +157,7 @@ class MovieTest {
     @Test
     void equals_same_object_reference() {
         // given
-        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
+        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Genre.ROMANCE, Genre.DRAMA));
 
         // when
         Movie sameMovie = movie;
@@ -168,10 +168,10 @@ class MovieTest {
     @Test
     void equals_same_object() {
         // given
-        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
+        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Genre.ROMANCE, Genre.DRAMA));
 
         // when
-        Movie sameMovie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
+        Movie sameMovie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Genre.ROMANCE, Genre.DRAMA));
 
         // then
         assertTrue(movie.equals(sameMovie));
@@ -179,7 +179,7 @@ class MovieTest {
     @Test
     void equals_no_movie() {
         // given
-        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
+        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Genre.ROMANCE, Genre.DRAMA));
 
         // when
         String noMovie = "not a movie!";
@@ -190,10 +190,10 @@ class MovieTest {
     @Test
     void equals_not_same_movie() {
         // given
-        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Movie.Genre.ROMANCE, Movie.Genre.DRAMA));
+        Movie movie = new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Genre.ROMANCE, Genre.DRAMA));
 
         // when
-        Movie differentMovie = new Movie("The Sound of Silence", "A drama about a young musician who struggles to come to terms with his deafness, and must find a new way to connect with the world and his art.", Arrays.asList(Movie.Genre.DRAMA, Movie.Genre.SCIENCE_FICTION));
+        Movie differentMovie = new Movie("The Sound of Silence", "A drama about a young musician who struggles to come to terms with his deafness, and must find a new way to connect with the world and his art.", Arrays.asList(Genre.DRAMA, Genre.SCIENCE_FICTION));
 
         // then
         assertFalse(movie.equals(differentMovie));

@@ -10,30 +10,6 @@ public class Movie {
     private String title;
     private String description;
     private List<Genre> genres;
-    public enum Genre {
-
-        ACTION,
-        ADVENTURE,
-        ANIMATION,
-        BIOGRAPHY,
-        COMEDY,
-        CRIME,
-        DRAMA,
-        DOCUMENTARY,
-        FAMILY,
-        FANTASY,
-        HISTORY,
-        HORROR,
-        MUSICAL,
-        MYSTERY,
-        ROMANCE,
-        SCIENCE_FICTION,
-        SPORT,
-        THRILLER,
-        WAR,
-        WESTERN
-    }
-
 
     public Movie(String title, String description, List<Genre> genres) {
         this.title = title;
@@ -78,7 +54,7 @@ public class Movie {
 
 
 
-    public static List<Movie> filter(List<Movie> movies, Movie.Genre genre) {
+    public static List<Movie> filter(List<Movie> movies, Genre genre) {
         if (genre == null) {
             return movies;
         }

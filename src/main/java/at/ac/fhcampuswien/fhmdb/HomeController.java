@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
@@ -47,11 +48,11 @@ public class HomeController implements Initializable {
         // adding genre filter items
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().add("-- NO FILTER --");
-        genreComboBox.getItems().addAll(Movie.Genre.values()); //comboBox filled with Genre values (enum)
+        genreComboBox.getItems().addAll(Genre.values()); //comboBox filled with Genre values (enum)
 
         // adding event handlers to search button
         searchBtn.setOnAction(e -> {
-            observableMovies.setAll(filterMovies(genreComboBox.getSelectionModel().getSelectedItem(), searchField.getText()));
+            observableMovies.setAll(filterMovies(genreComboBox.getSelectionModel().getSelectedItem(), searchField.getText(), allMovies));
         });
 
         // Sort button
@@ -66,11 +67,11 @@ public class HomeController implements Initializable {
         });
 
     }
-    public List<Movie> filterMovies(Object genre, String searchString) {
-        Movie.Genre selectedGenre = null;
-        if(genre != null && (genre instanceof Movie.Genre))
-            selectedGenre = (Movie.Genre) genre;
-        List<Movie> filteredMovies = Movie.filter(allMovies, selectedGenre);
+    public List<Movie> filterMovies(Object genre, String searchString, List<Movie> movies) {
+        Genre selectedGenre = null;
+        if(genre != null && (genre instanceof Genre))
+            selectedGenre = (Genre) genre;
+        List<Movie> filteredMovies = Movie.filter(movies, selectedGenre);
         if (searchString != "") {
             filteredMovies = Movie.search(searchString, filteredMovies); //search within filteredMovies
         }
