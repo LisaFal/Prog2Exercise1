@@ -141,6 +141,18 @@ class MovieTest {
         // then
         assertEquals(expected, filteredMovies);
     }
+    @Test
+    void test_filter_wrong_movie_for_genre_crime() {
+        // given
+        List<Movie> movies = Movie.initializeMovies();
+        List<Movie> expected = Arrays.asList( movies.get(0), movies.get(1) );
+
+        // when
+        List<Movie> filteredMovies = Movie.filter(movies, Movie.Genre.CRIME);
+
+        // then
+        assertNotEquals(expected, filteredMovies);
+    }
 
     @Test
     void equals_same_object_reference() {

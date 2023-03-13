@@ -93,7 +93,6 @@ public class Movie {
         return filteredMovies;
     }
 
-
     public static List<Movie> sortingAsc(List<Movie> list) {
         list.sort(Comparator.comparing(Movie::getTitle));
         return list;
@@ -125,5 +124,6 @@ public class Movie {
         Movie m = (Movie) o;
        return m.getGenres().equals(getGenres()) && m.getTitle().equals(getTitle()) && m.getDescription().equals(getDescription());
    }
+
 
 }
