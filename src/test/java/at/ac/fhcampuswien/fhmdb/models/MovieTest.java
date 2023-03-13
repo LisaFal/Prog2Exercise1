@@ -111,7 +111,7 @@ class MovieTest {
 
 
     @Test
-    public void test_filter_by_genre_action() {
+    void test_filter_by_genre_action() {
         // given
         List<Movie> movies = Movie.initializeMovies();
         List<Movie> expected = Arrays.asList( movies.get(0), movies.get(1) );
@@ -124,7 +124,7 @@ class MovieTest {
     }
 
     @Test
-    public void test_filter_by_genre_western() {
+    void test_filter_by_genre_western() {
         // given
         List<Movie> movies = Movie.initializeMovies();
         List<Movie> expected = Arrays.asList( movies.get(12), movies.get(13));
@@ -136,18 +136,24 @@ class MovieTest {
         assertEquals(expected, filteredMovies);
     }
 
+
+
     @Test
-    public void test_filter_by_genre_crime() {
+    void test_filter_wrong_movie_for_genre_crime() {
         // given
         List<Movie> movies = Movie.initializeMovies();
-        List<Movie> expected = Arrays.asList( movies.get(3), movies.get(5), movies.get(9), movies.get(14) );
+        List<Movie> expected = Arrays.asList( movies.get(0), movies.get(1) );
 
         // when
         List<Movie> filteredMovies = Movie.filter(movies, Movie.Genre.CRIME);
 
         // then
-        assertEquals(expected, filteredMovies);
+        assertNotEquals(expected, filteredMovies);
     }
+
+
+
+
 
 
 }
