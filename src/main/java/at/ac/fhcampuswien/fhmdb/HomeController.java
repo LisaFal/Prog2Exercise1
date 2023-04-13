@@ -2,6 +2,8 @@ package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.models.Rating;
+import at.ac.fhcampuswien.fhmdb.models.ReleaseYear;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -29,6 +31,12 @@ public class HomeController implements Initializable {
     public JFXComboBox genreComboBox;
 
     @FXML
+    public JFXComboBox releaseYearComboBox;
+
+    @FXML
+    public JFXComboBox ratingComboBox;
+
+    @FXML
     public JFXButton sortBtn;
 
     public List<Movie> allMovies = Movie.initializeMovies();
@@ -49,6 +57,16 @@ public class HomeController implements Initializable {
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().add("-- NO FILTER --");
         genreComboBox.getItems().addAll(Genre.values()); //comboBox filled with Genre values (enum)
+
+        //adding release year filter items
+        releaseYearComboBox.setPromptText("Filter by Release Year");
+        releaseYearComboBox.getItems().add("-- NO FILTER --");
+        releaseYearComboBox.getItems().addAll(ReleaseYear.values());
+
+        //adding rating filter items
+        ratingComboBox.setPromptText("Filter by Rating");
+        ratingComboBox.getItems().add("-- NO FILTER --");
+        ratingComboBox.getItems().addAll(Rating.values());
 
         // adding event handlers to search button
         searchBtn.setOnAction(e -> {
