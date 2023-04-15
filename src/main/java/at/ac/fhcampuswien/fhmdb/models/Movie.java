@@ -7,10 +7,31 @@ import java.util.Comparator;
 
 
 public class Movie {
+    private String id;
     private String title;
-    private String description;
     private List<Genre> genres;
+    private int releaseYear;
+    private String description;
+    private String imgUrl;
+    private int lengthInMinutes;
+    private String[] directors;
+    private String[] writers;
+    private String[] mainCast;
+    private double rating;
 
+    public Movie(String id, String title, List<Genre> genres, int releaseYear, String description, String imgUrl, int lengthInMinutes, String[] directors, String[] writers, String[] mainCast, double rating) {
+        this.id = id;
+        this.title = title;
+        this.genres = genres;
+        this.releaseYear = releaseYear;
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.lengthInMinutes = lengthInMinutes;
+        this.directors = directors;
+        this.writers = writers;
+        this.mainCast = mainCast;
+        this.rating = rating;
+    }
     public Movie(String title, String description, List<Genre> genres) {
         this.title = title;
         this.description = description;
@@ -101,5 +122,79 @@ public class Movie {
        return m.getGenres().equals(getGenres()) && m.getTitle().equals(getTitle()) && m.getDescription().equals(getDescription());
    }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public int getLengthInMinutes() {
+        return lengthInMinutes;
+    }
+
+    public void setLengthInMinutes(int lengthInMinutes) {
+        this.lengthInMinutes = lengthInMinutes;
+    }
+
+    public String[] getDirectors() {
+        return directors;
+    }
+
+    public void setDirectors(String[] directors) {
+        this.directors = directors;
+    }
+
+    public String[] getWriters() {
+        return writers;
+    }
+
+    public void setWriters(String[] writers) {
+        this.writers = writers;
+    }
+
+    public String[] getMainCast() {
+        return mainCast;
+    }
+
+    public void setMainCast(String[] mainCast) {
+        this.mainCast = mainCast;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
 }
