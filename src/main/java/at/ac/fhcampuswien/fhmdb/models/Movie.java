@@ -7,24 +7,18 @@ import java.util.Comparator;
 
 
 public class Movie {
+    private String id;
     private String title;
-    private String description;
     private List<Genre> genres;
-
-    //new attributes
     private int releaseYear;
-
+    private String description;
+    private String imgUrl;
+    private int lengthInMinutes;
+    private String[] directors;
+    private String[] writers;
+    private String[] mainCast;
     private double rating;
 
-    private String imgUrl;
-
-    private int lengthInMinutes;
-
-    private String directors;
-
-    private String writers;
-
-    private String mainCast;
 
     public Movie(String title, String description, List<Genre> genres) {
         this.title = title;
@@ -33,8 +27,8 @@ public class Movie {
     }
 
     //new constructor
-    public Movie(String title, List<Genre> genres, int releaseYear, String description, String imgUrl, int lengthInMinutes,
-                 String directors, String writers, String mainCast, double rating) {
+    public Movie(String id, String title, List<Genre> genres, int releaseYear, String description, String imgUrl,
+                 int lengthInMinutes, String[] directors, String[] writers, String[] mainCast, double rating) {
         this.title = title;
         this.genres = genres;
         this.releaseYear = releaseYear;
@@ -62,9 +56,9 @@ public class Movie {
     public int getReleaseYear() { return releaseYear; }
     public String getImgUrl() { return imgUrl; }
     public int getLengthInMinutes() { return lengthInMinutes; }
-    public String getDirectors() { return directors; }
-    public String getWriters() { return writers; }
-    public String getMainCast() { return mainCast; }
+    public String[] getDirectors() { return directors; }
+    public String[] getWriters() { return writers; }
+    public String[] getMainCast() { return mainCast; }
     public double getRating() { return rating; }
 
     public static List<Movie> initializeMovies() {
@@ -137,6 +131,20 @@ public class Movie {
         Movie m = (Movie) o;
        return m.getGenres().equals(getGenres()) && m.getTitle().equals(getTitle()) && m.getDescription().equals(getDescription());
    }
-
-
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", genres=" + genres +
+                ", releaseYear=" + releaseYear +
+                ", description='" + description + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", lengthInMinutes=" + lengthInMinutes +
+                ", directors=" + Arrays.toString(directors) +
+                ", writers=" + Arrays.toString(writers) +
+                ", mainCast=" + Arrays.toString(mainCast) +
+                ", rating=" + rating +
+                '}';
+    }
 }
