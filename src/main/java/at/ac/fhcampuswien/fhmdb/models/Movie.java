@@ -11,10 +11,40 @@ public class Movie {
     private String description;
     private List<Genre> genres;
 
+    //new attributes
+    private int releaseYear;
+
+    private double rating;
+
+    private String imgUrl;
+
+    private int lengthInMinutes;
+
+    private String directors;
+
+    private String writers;
+
+    private String mainCast;
+
     public Movie(String title, String description, List<Genre> genres) {
         this.title = title;
         this.description = description;
         this.genres = genres;
+    }
+
+    //new constructor
+    public Movie(String title, List<Genre> genres, int releaseYear, String description, String imgUrl, int lengthInMinutes,
+                 String directors, String writers, String mainCast, double rating) {
+        this.title = title;
+        this.genres = genres;
+        this.releaseYear = releaseYear;
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.lengthInMinutes = lengthInMinutes;
+        this.directors = directors;
+        this.writers = writers;
+        this.mainCast = mainCast;
+        this.rating = rating;
     }
 
     public String getTitle() {
@@ -23,12 +53,19 @@ public class Movie {
 
     public String getDescription() {
         return description;
-
     }
-
     public List<Genre> getGenres() {
         return genres;
     }
+
+    //new Getters
+    public int getReleaseYear() { return releaseYear; }
+    public String getImgUrl() { return imgUrl; }
+    public int getLengthInMinutes() { return lengthInMinutes; }
+    public String getDirectors() { return directors; }
+    public String getWriters() { return writers; }
+    public String getMainCast() { return mainCast; }
+    public double getRating() { return rating; }
 
     public static List<Movie> initializeMovies() {
         List<Movie> movies = new ArrayList<>();
