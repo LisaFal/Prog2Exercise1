@@ -52,10 +52,11 @@
             <type>maven-plugin</type>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.9.1</version>
+            <version>4.10.0</version>
         </dependency>
 
         <!--  Gson: Java to JSON conversion -->
