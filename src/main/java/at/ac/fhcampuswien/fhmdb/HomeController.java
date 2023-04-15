@@ -97,4 +97,14 @@ public class HomeController implements Initializable {
         }
         return  filteredMovies;
     }
+
+
+    public int getLongestMovieTitle(List<Movie> movies) {
+        return movies.stream()
+                .mapToInt(movie -> movie.getTitle().length())
+                .max()
+                .orElse(0);
+    }
+
+
 }
