@@ -2,6 +2,8 @@ package at.ac.fhcampuswien.fhmdb.api;
 
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.models.Rating;
+import at.ac.fhcampuswien.fhmdb.models.ReleaseYear;
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -16,7 +18,7 @@ public class MovieAPI {
     private static final OkHttpClient client = new OkHttpClient();
     private static final String urlStart = "http://prog2.fh-campuswien.ac.at/movies";
 
-    private String run(String url) throws IOException {
+    private static String run(String url) throws IOException {
         Request request = new Request.Builder()
                 .addHeader("User-Agent", "Chrome")
                 .url(url)
@@ -29,7 +31,7 @@ public class MovieAPI {
         }
     }
 
-    private String createUrl(String query, Genre genre, int releaseYear, double ratingFrom) {
+    private static String createUrl(String query, Genre genre, ReleaseYear releaseYear, Rating ratingFrom) {
         String url = urlStart;
         List<String> params = new ArrayList<>();
         if(query != null) {
@@ -38,10 +40,10 @@ public class MovieAPI {
         if(genre != null) {
             params.add("genre=" + genre.name());
         }
-        if(releaseYear != -1) {
+        if(releaseYear != null) {
             params.add("releaseYear=" + releaseYear);
         }
-        if(ratingFrom != -1) {
+        if(ratingFrom != null) {
             params.add("ratingFrom=" + ratingFrom);
         }
         for(int i = 0; i < params.size(); i++) {
@@ -52,7 +54,7 @@ public class MovieAPI {
         }
         return url;
     }
-    public List<Movie> fetchMovies(String query, Genre genre, int releaseYear, double ratingFrom) throws IOException {
+    public static List<Movie> fetchMovies(String query, Genre genre, ReleaseYear releaseYear, Rating ratingFrom) throws IOException {
         String response = null;
         response = run(createUrl(query, genre, releaseYear, ratingFrom));
         Gson gson = new Gson();
