@@ -41,11 +41,24 @@ public class HomeController implements Initializable {
     @FXML
     public JFXButton sortBtn;
 
-    public List<Movie> allMovies = Movie.initializeMovies();
+    private String query = null;
+    private Genre genre = null;
+    private ReleaseYear releaseYear = null;
+    private Rating ratingFrom = null;
+    public List<Movie> allMovies;
+
+    {
+        try {
+            allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
-
+    public HomeController() {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,8 +85,32 @@ public class HomeController implements Initializable {
 
         // adding event handlers to search button
         searchBtn.setOnAction(e -> {
-            observableMovies.setAll(filterMovies(genreComboBox.getSelectionModel().getSelectedItem(), searchField.getText(), allMovies));
+            if (searchField.getText() != null) { query = searchField.getText();
+                } else { query = null; }
+            if (genreComboBox.getSelectionModel().getSelectedItem() != null &&
+                    genreComboBox.getSelectionModel().getSelectedItem() != "-- NO FILTER --") {
+                genre = (Genre) genreComboBox.getSelectionModel().getSelectedItem();
+                } else { genre = null; }
+            if (releaseYearComboBox.getSelectionModel().getSelectedItem() != null &&
+                    releaseYearComboBox.getSelectionModel().getSelectedItem() != "-- NO FILTER --") {
+                releaseYear = (ReleaseYear) releaseYearComboBox.getSelectionModel().getSelectedItem();
+                } else { releaseYear = null; }
+            if (ratingComboBox.getSelectionModel().getSelectedItem() != null &&
+                    ratingComboBox.getSelectionModel().getSelectedItem() != "-- NO FILTER --") {
+                ratingFrom = (Rating) ratingComboBox.getSelectionModel().getSelectedItem();
+                } else { ratingFrom = null; }
+            try {
+                allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            observableMovies.setAll(allMovies);
+
+            //used only when filter via filterMovies:
+            //observableMovies.setAll(filterMovies(genreComboBox.getSelectionModel().getSelectedItem(), searchField.getText(), allMovies));
         });
+
+
 
         // Sort button
         sortBtn.setOnAction(actionEvent -> {
