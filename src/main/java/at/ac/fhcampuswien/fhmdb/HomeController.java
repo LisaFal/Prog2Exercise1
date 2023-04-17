@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HomeController implements Initializable {
     @FXML
@@ -141,6 +142,29 @@ public class HomeController implements Initializable {
                 .mapToInt(movie -> movie.getTitle().length())
                 .max()
                 .orElse(0);
+    }
+
+    public String getMostPopularActor(List<Movie> movies) {
+        Map<String, Long> actorFrequency = movies.stream()
+                .flatMap(movie -> Arrays.stream(movie.getMainCast()))
+                .collect(Collectors.groupingBy(actor -> actor, Collectors.counting()));
+
+        return actorFrequency.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    }
+
+    public long countMoviesFrom(List<Movie> movies, String director) {
+        return movies.stream()
+                .filter(movie -> Arrays.asList(movie.getDirectors()).contains(director))
+                .count();
+    }
+
+    public List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
+        return movies.stream()
+                .filter(movie -> movie.getReleaseYear() >= startYear && movie.getReleaseYear() <= endYear)
+                .collect(Collectors.toList());
     }
 
 

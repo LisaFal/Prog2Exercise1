@@ -61,7 +61,11 @@ public class Movie {
     public String[] getMainCast() { return mainCast; }
     public double getRating() { return rating; }
 
+
+    /*
     public static List<Movie> initializeMovies() {
+
+
         List<Movie> movies = new ArrayList<>();
 
         movies.add(new Movie("Midnight Escape", "A group of friends embark on a dangerous journey to break out of a maximum-security prison in order to clear their names.", Arrays.asList(Genre.ACTION, Genre.DRAMA)));
@@ -81,7 +85,11 @@ public class Movie {
         movies.add(new Movie("Murder on the Nile", "A classic whodunit mystery set on a luxury cruise ship sailing down the Nile river.", Arrays.asList(Genre.MYSTERY, Genre.ADVENTURE, Genre.CRIME)));
 
         return movies;
+
+
     }
+
+     */
 
 
 
