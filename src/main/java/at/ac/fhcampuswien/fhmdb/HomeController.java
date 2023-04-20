@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -23,24 +24,20 @@ import java.util.stream.Collectors;
 public class HomeController implements Initializable {
     @FXML
     public JFXButton searchBtn;
-
-    @FXML
     public TextField searchField;
-
-    @FXML
     public JFXListView movieListView;
-
-    @FXML
     public JFXComboBox genreComboBox;
-
-    @FXML
     public JFXComboBox releaseYearComboBox;
-
-    @FXML
     public JFXComboBox ratingComboBox;
+    public JFXButton sortBtn;
 
     @FXML
-    public JFXButton sortBtn;
+    public Label longestMovie;
+    public Label popularActor;
+    public TextField searchfieldDirectors;
+    public JFXButton searchDirectorsBtn;
+    public Label amountDirectors;
+
 
     private String query = null;
     private Genre genre = null;
@@ -48,7 +45,7 @@ public class HomeController implements Initializable {
     private Rating ratingFrom = null;
     public List<Movie> allMovies;
 
-    {
+    { //initializing the movielist
         try {
             allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
         } catch (IOException e) {
@@ -63,7 +60,7 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        observableMovies.addAll(allMovies);         // add dummy data to observable list
+        observableMovies.addAll(allMovies);         // add data to observable list
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
@@ -84,7 +81,7 @@ public class HomeController implements Initializable {
         ratingComboBox.getItems().add("-- NO FILTER --");
         ratingComboBox.getItems().addAll(Rating.values());
 
-        // adding event handlers to search button
+        // adding event handler to search button
         searchBtn.setOnAction(e -> {
             if (searchField.getText() != null) { query = searchField.getText();
                 } else { query = null; }
@@ -111,8 +108,6 @@ public class HomeController implements Initializable {
             //observableMovies.setAll(filterMovies(genreComboBox.getSelectionModel().getSelectedItem(), searchField.getText(), allMovies));
         });
 
-
-
         // Sort button
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
@@ -124,7 +119,17 @@ public class HomeController implements Initializable {
             }
         });
 
+        //implementing the stream-methods from Exercise 2 to UI
+        longestMovie.setText(String.valueOf(getLongestMovieTitle(observableMovies)) + " Chars");
+        popularActor.setText(getMostPopularActor(observableMovies));
+        searchDirectorsBtn.setOnAction(actionEvent -> {
+            amountDirectors.setText(String.valueOf(countMoviesFrom(observableMovies, searchfieldDirectors.getText())));
+        });
+        //TO DO: getMoviesBetweenTwoYears - should this replace the filtering via parameters (URL)?
+
+
     }
+    //NOT NEEDED AT THE MOMENT - still here for the tests
     public List<Movie> filterMovies(Object genre, String searchString, List<Movie> movies) {
         Genre selectedGenre = null;
         if(genre != null && (genre instanceof Genre))
@@ -166,6 +171,5 @@ public class HomeController implements Initializable {
                 .filter(movie -> movie.getReleaseYear() >= startYear && movie.getReleaseYear() <= endYear)
                 .collect(Collectors.toList());
     }
-
 
 }
