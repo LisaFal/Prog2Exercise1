@@ -31,7 +31,7 @@ public class MovieAPI {
         }
     }
 
-    private static String createUrl(String query, Genre genre, ReleaseYear releaseYear, Rating ratingFrom) {
+    public static String createUrl(String query, Genre genre, int releaseYear, double ratingFrom) {
         String url = urlStart;
         List<String> params = new ArrayList<>();
         if(query != null) {
@@ -40,10 +40,10 @@ public class MovieAPI {
         if(genre != null) {
             params.add("genre=" + genre.name());
         }
-        if(releaseYear != null) {
+        if(releaseYear != -1) {
             params.add("releaseYear=" + releaseYear);
         }
-        if(ratingFrom != null) {
+        if(ratingFrom != -1) {
             params.add("ratingFrom=" + ratingFrom);
         }
         for(int i = 0; i < params.size(); i++) {
@@ -54,7 +54,7 @@ public class MovieAPI {
         }
         return url;
     }
-    public static List<Movie> fetchMovies(String query, Genre genre, ReleaseYear releaseYear, Rating ratingFrom) throws IOException {
+    public static List<Movie> fetchMovies(String query, Genre genre, int releaseYear, double ratingFrom) throws IOException {
         String response = null;
         response = run(createUrl(query, genre, releaseYear, ratingFrom));
         Gson gson = new Gson();
