@@ -31,7 +31,7 @@ public class MovieAPI {
         }
     }
 
-    private static String createUrl(String query, Genre genre, int releaseYear, double ratingFrom) {
+    public static String createUrl(String query, Genre genre, int releaseYear, double ratingFrom) {
         String url = urlStart;
         List<String> params = new ArrayList<>();
         if(query != null) {
