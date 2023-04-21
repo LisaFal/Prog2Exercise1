@@ -3,8 +3,6 @@ package at.ac.fhcampuswien.fhmdb;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
-import at.ac.fhcampuswien.fhmdb.models.Rating;
-import at.ac.fhcampuswien.fhmdb.models.ReleaseYear;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -83,12 +81,7 @@ public class HomeController implements Initializable {
         releaseYearComboBox.getItems().addAll(years);
 
         //adding rating filter items
-        List<Double> ratings = new ArrayList<>();
-        for(Movie m : allMovies) {
-            if(!ratings.contains(m.getRating()))
-                ratings.add(m.getRating());
-        }
-        Collections.sort(ratings);
+        List<Double> ratings = Arrays.asList(6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5);
         ratingComboBox.setPromptText("Filter by Rating");
         ratingComboBox.getItems().add("-- NO FILTER --");
         ratingComboBox.getItems().addAll(ratings);
