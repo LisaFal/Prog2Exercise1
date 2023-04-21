@@ -3,9 +3,6 @@ package at.ac.fhcampuswien.fhmdb;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
-import at.ac.fhcampuswien.fhmdb.models.Rating;
-import at.ac.fhcampuswien.fhmdb.models.ReleaseYear;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +42,7 @@ class HomeControllerTest {
 
 
 
-        dummyMov2.addAll(MovieAPI.fetchMovies(null, null, null, null));
+        dummyMov2.addAll(MovieAPI.fetchMovies(null, null, -1, -1));
     }
     @Test
     void filterMovies_empty_textfield_and_no_genre_selected_returns_all_movies() {
