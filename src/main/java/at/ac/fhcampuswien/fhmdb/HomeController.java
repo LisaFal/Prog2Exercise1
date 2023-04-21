@@ -43,8 +43,8 @@ public class HomeController implements Initializable {
 
     private String query = null;
     private Genre genre = null;
-    private ReleaseYear releaseYear = null;
-    private Rating ratingFrom = null;
+    private int releaseYear = -1;
+    private double ratingFrom = -1;
     public List<Movie> allMovies;
 
     {
@@ -62,7 +62,7 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        observableMovies.addAll(allMovies);         // add dummy data to observable list
+        observableMovies.addAll(allMovies);         // add movie data to observable list
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
@@ -74,14 +74,26 @@ public class HomeController implements Initializable {
         genreComboBox.getItems().addAll(Genre.values()); //comboBox filled with Genre values (enum)
 
         //adding release year filter items
+        List<Integer> years = new ArrayList<>();
+        for(Movie m : allMovies) {
+            if(!years.contains(m.getReleaseYear()))
+                years.add(m.getReleaseYear());
+        }
+        Collections.sort(years);
         releaseYearComboBox.setPromptText("Filter by Release Year");
         releaseYearComboBox.getItems().add("-- NO FILTER --");
-        releaseYearComboBox.getItems().addAll(ReleaseYear.values());
+        releaseYearComboBox.getItems().addAll(years);
 
         //adding rating filter items
+        List<Double> ratings = new ArrayList<>();
+        for(Movie m : allMovies) {
+            if(!ratings.contains(m.getRating()))
+                ratings.add(m.getRating());
+        }
+        Collections.sort(ratings);
         ratingComboBox.setPromptText("Filter by Rating");
         ratingComboBox.getItems().add("-- NO FILTER --");
-        ratingComboBox.getItems().addAll(Rating.values());
+        ratingComboBox.getItems().addAll(ratings);
 
         // adding event handlers to search button
         searchBtn.setOnAction(e -> {
@@ -93,12 +105,12 @@ public class HomeController implements Initializable {
                 } else { genre = null; }
             if (releaseYearComboBox.getSelectionModel().getSelectedItem() != null &&
                     releaseYearComboBox.getSelectionModel().getSelectedItem() != "-- NO FILTER --") {
-                releaseYear = (ReleaseYear) releaseYearComboBox.getSelectionModel().getSelectedItem();
-                } else { releaseYear = null; }
+                releaseYear = (int) releaseYearComboBox.getSelectionModel().getSelectedItem();
+                } else { releaseYear = -1; }
             if (ratingComboBox.getSelectionModel().getSelectedItem() != null &&
                     ratingComboBox.getSelectionModel().getSelectedItem() != "-- NO FILTER --") {
-                ratingFrom = (Rating) ratingComboBox.getSelectionModel().getSelectedItem();
-                } else { ratingFrom = null; }
+                ratingFrom = (double) ratingComboBox.getSelectionModel().getSelectedItem();
+                } else { ratingFrom = -1; }
             try {
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
             } catch (IOException ex) {
