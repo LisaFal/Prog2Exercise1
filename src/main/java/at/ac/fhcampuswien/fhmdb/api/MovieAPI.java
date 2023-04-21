@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MovieAPI {
     private static final OkHttpClient client = new OkHttpClient();
-    private static final String urlStart = "http://prog2.fh-campuswien.ac.at/movies";
+    private static final String URL_START = "http://prog2.fh-campuswien.ac.at/movies";
 
     private static String run(String url) throws IOException {
         Request request = new Request.Builder()
@@ -30,7 +30,7 @@ public class MovieAPI {
     }
 
     public static String createUrl(String query, Genre genre, int releaseYear, double ratingFrom) {
-        String url = urlStart;
+        String url = URL_START;
         List<String> params = new ArrayList<>();
         if(query != null) {
             params.add("query=" + query);

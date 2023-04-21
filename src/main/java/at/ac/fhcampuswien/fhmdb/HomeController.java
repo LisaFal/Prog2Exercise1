@@ -42,14 +42,7 @@ public class HomeController implements Initializable {
     private int releaseYear = -1;
     private double ratingFrom = -1;
     public List<Movie> allMovies;
-
-    { //initializing the movielist
-        try {
-            allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private static final Double[] RATING_VALUES = {6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5};
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
@@ -58,6 +51,13 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        { //initializing the movielist
+            try {
+                allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         observableMovies.addAll(allMovies);         // add movie data to observable list
 
         // initialize UI stuff
@@ -81,7 +81,7 @@ public class HomeController implements Initializable {
         releaseYearComboBox.getItems().addAll(years);
 
         //adding rating filter items
-        List<Double> ratings = Arrays.asList(6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5);
+        List<Double> ratings = new ArrayList<>(Arrays.asList(RATING_VALUES));
         ratingComboBox.setPromptText("Filter by Rating");
         ratingComboBox.getItems().add("-- NO FILTER --");
         ratingComboBox.getItems().addAll(ratings);
