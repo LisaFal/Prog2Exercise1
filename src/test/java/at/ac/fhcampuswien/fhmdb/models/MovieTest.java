@@ -115,10 +115,10 @@ class MovieTest {
         String searchString = "";
 
         //when
-        List<Movie> movieList = search(searchString, Movie.initializeMovies());
+        List<Movie> movieList = search(searchString, dummyMovies);
 
         //then
-        assertEquals(Movie.initializeMovies(),movieList);
+        assertEquals(dummyMovies,movieList);
     }
 
 
@@ -129,7 +129,7 @@ class MovieTest {
         List <Movie> expectedList = new ArrayList<>();
 
         //when
-        List <Movie> actualmovieList = search(searchString, Movie.initializeMovies());
+        List <Movie> actualmovieList = search(searchString, dummyMovies);
 
         //then
         assertEquals(expectedList, actualmovieList);

@@ -4,6 +4,8 @@ import at.ac.fhcampuswien.fhmdb.models.Movie;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
@@ -20,13 +22,17 @@ public class MovieCell extends ListCell<Movie> {
 
 //new labels for releaseYear and rating
     private final Label releaseYear = new Label();
+    private final Label rating = new Label();
+
+    //for later (probably):
     private final Label imgUrl = new Label();
     private final Label lengthInMinutes = new Label();
     private final Label directors = new Label();
     private final Label writers = new Label();
     private final Label mainCast = new Label();
-    private final Label rating = new Label();
+
     private final VBox layout = new VBox(title, detail, genre, releaseYear, rating);
+
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {

@@ -61,7 +61,11 @@ public class Movie {
     public String[] getMainCast() { return mainCast; }
     public double getRating() { return rating; }
 
+
+    /*
     public static List<Movie> initializeMovies() {
+
+
         List<Movie> movies = new ArrayList<>();
 
         movies.add(new Movie("Midnight Escape", "A group of friends embark on a dangerous journey to break out of a maximum-security prison in order to clear their names.", Arrays.asList(Genre.ACTION, Genre.DRAMA)));
@@ -81,10 +85,9 @@ public class Movie {
         movies.add(new Movie("Murder on the Nile", "A classic whodunit mystery set on a luxury cruise ship sailing down the Nile river.", Arrays.asList(Genre.MYSTERY, Genre.ADVENTURE, Genre.CRIME)));
 
         return movies;
-    }
+    }*/
 
-
-
+    //NOT NEEDED AT THE MOMENT - still here for the tests
     public static List<Movie> filter(List<Movie> movies, Genre genre) {
         if (genre == null) {
             return movies;
@@ -110,7 +113,8 @@ public class Movie {
         return list;
     }
 
-   public static List <Movie> search(String searchWord, List<Movie> movies) {
+    //NOT NEEDED AT THE MOMENT - still here for the tests
+    public static List <Movie> search(String searchWord, List<Movie> movies) {
        List<Movie> resultSearch = new ArrayList<>();
         for (Movie movie : movies)  {
             String title = movie.getTitle().toLowerCase();
@@ -122,6 +126,7 @@ public class Movie {
        }
         return resultSearch;
    }
+
    @Override
     public boolean equals(Object o) {
         if(o == this)

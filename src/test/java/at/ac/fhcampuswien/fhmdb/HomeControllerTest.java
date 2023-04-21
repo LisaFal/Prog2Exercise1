@@ -1,11 +1,15 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.models.Rating;
+import at.ac.fhcampuswien.fhmdb.models.ReleaseYear;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +19,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class HomeControllerTest {
 
     List<Movie> dummyMovies = new ArrayList<>();
+    List<Movie> dummyMov2 = new ArrayList<>();
+
+    HomeControllerTest() throws IOException {
+    }
+
     @BeforeEach
-    void createMovieList() {
+    void createMovieList() throws IOException {
+
         dummyMovies.add(new Movie("Midnight Escape", "A group of friends embark on a dangerous journey to break out of a maximum-security prison in order to clear their names.", Arrays.asList(Genre.ACTION, Genre.DRAMA)));
         dummyMovies.add(new Movie("Lost Treasure of the Amazon", "A team of explorers search for a legendary treasure in the heart of the Amazon jungle, but they soon realize that they are not alone.", Arrays.asList(Genre.ACTION, Genre.HORROR)));
         dummyMovies.add(new Movie("Titanic", "Two stangers fall in love on a ship which unfortunately sinks.", Arrays.asList(Genre.ROMANCE, Genre.DRAMA)));
@@ -32,6 +42,10 @@ class HomeControllerTest {
         dummyMovies.add(new Movie("The Great Escape Room", "A group of strangers must work together to solve a series of puzzles and escape a deadly game created by a twisted mastermind.", Arrays.asList(Genre.THRILLER, Genre.WESTERN)));
         dummyMovies.add(new Movie("The Iron Horsemen", "A gripping western about a lone rider who seeks revenge against the corrupt officials who wronged him.", Arrays.asList(Genre.HORROR, Genre.WESTERN, Genre.WAR)));
         dummyMovies.add(new Movie("Murder on the Nile", "A classic whodunit mystery set on a luxury cruise ship sailing down the Nile river.", Arrays.asList(Genre.MYSTERY, Genre.ADVENTURE, Genre.CRIME)));
+
+
+
+        dummyMov2.addAll(MovieAPI.fetchMovies(null, null, null, null));
     }
     @Test
     void filterMovies_empty_textfield_and_no_genre_selected_returns_all_movies() {
@@ -125,5 +139,43 @@ class HomeControllerTest {
         // then
         assertArrayEquals(expectedMovies.toArray(), movies.toArray());
     }
+
+    // test for exercise 2 - java streams methods
+
+
+
+    private final HomeController controller = new HomeController();
+
+
+
+
+
+    @Test
+    void testGetMostPopularActor() {
+        String mostPopularActor = controller.getMostPopularActor(dummyMov2);
+        assertEquals("Tom Hanks", mostPopularActor);
+    }
+
+    @Test
+    void testGetLongestMovieTitle() {
+        int longestMovieTitle = controller.getLongestMovieTitle(dummyMov2);
+        assertEquals(46, longestMovieTitle);
+    }
+
+    @Test
+    void testCountMoviesFrom() {
+        long movieCount = controller.countMoviesFrom(dummyMov2, "Christopher Nolan");
+        assertEquals(2, movieCount);
+    }
+
+    @Test
+    void testGetMoviesBetweenYears() {
+        List<Movie> moviesBetweenYears = controller.getMoviesBetweenYears(dummyMov2, 2000, 2010);
+        assertEquals(7, moviesBetweenYears.size());
+    }
+
+
+
+
 
 }
