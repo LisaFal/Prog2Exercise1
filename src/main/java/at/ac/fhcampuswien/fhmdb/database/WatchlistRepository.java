@@ -14,12 +14,13 @@ public class WatchlistRepository {
         this.dao = Database.getDatabase().getDao();
     }
 
-    public void addToWatchlist(Movie movie) throws SQLException {
-        genres = WatchlistEntity.genresToString(movie.getGenres());
+    public void addToWatchlist(WatchlistEntity movie) throws SQLException {
+        genres = movie.getGenres();
         WatchlistEntity movieEntry = new WatchlistEntity("api?", movie.getTitle(), movie.getDescription(), genres, movie.getReleaseYear(),
                 movie.getImgUrl(), movie.getLengthInMinutes(), movie.getRating());
         dao.create(movieEntry);
     }
+
 
     public void removeFromWatchlist(Movie movie) throws SQLException {
         genres = WatchlistEntity.genresToString(movie.getGenres());

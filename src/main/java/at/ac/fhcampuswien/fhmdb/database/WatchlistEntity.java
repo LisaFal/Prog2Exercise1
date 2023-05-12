@@ -42,6 +42,39 @@ public class WatchlistEntity {
         this.rating = rating;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getApiId() {
+        return apiId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+
+    public int getLengthInMinutes() {
+        return lengthInMinutes;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
     public static String genresToString(List<Genre> genres) {
         List<String> genreNames = genres.stream()
                 .map(Enum::name)
@@ -49,6 +82,9 @@ public class WatchlistEntity {
         return String.join(", ", genreNames);
     }
 
+    public String getImgUrl() {
+        return imgURL;
+    }
 }
 
 
