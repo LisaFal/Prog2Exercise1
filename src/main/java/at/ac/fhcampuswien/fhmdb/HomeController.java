@@ -10,9 +10,14 @@ import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +40,7 @@ public class HomeController implements Initializable {
     public TextField searchfieldDirectors;
     public JFXButton searchDirectorsBtn;
     public Label amountDirectors;
+    public JFXButton watchlistBtn;
 
 
     private String query = null;
@@ -122,6 +128,18 @@ public class HomeController implements Initializable {
                 Movie.sortingDes(observableMovies);
                 sortBtn.setText("Sort (asc)");
             }
+        });
+
+        watchlistBtn.setOnAction(actionEvent -> {
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("watchlist-view.fxml"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow() ;
+            stage.getScene().setRoot(root);
+            stage.show();
         });
 
         //implementing the stream-methods from Exercise 2 to UI
