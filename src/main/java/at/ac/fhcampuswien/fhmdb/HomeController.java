@@ -7,6 +7,7 @@ import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import exceptions.MovieAPIException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -54,8 +55,8 @@ public class HomeController implements Initializable {
         { //initializing the movielist
             try {
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (MovieAPIException e) {
+              //  throw new RuntimeException(e);
             }
         }
         observableMovies.addAll(allMovies);         // add movie data to observable list
@@ -104,8 +105,8 @@ public class HomeController implements Initializable {
                 } else { ratingFrom = -1; }
             try {
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            } catch (MovieAPIException exception) {
+               // throw new RuntimeException(exception);
             }
             observableMovies.setAll(allMovies);
 
@@ -176,5 +177,4 @@ public class HomeController implements Initializable {
                 .filter(movie -> movie.getReleaseYear() >= startYear && movie.getReleaseYear() <= endYear)
                 .collect(Collectors.toList());
     }
-
 }

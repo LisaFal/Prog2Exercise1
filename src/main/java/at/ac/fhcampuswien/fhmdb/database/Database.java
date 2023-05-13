@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import exceptions.DataBaseException;
 
 import java.sql.SQLException;
 
@@ -19,8 +20,12 @@ public class Database {
     //singleton pattern
     private static Database instance;
 
-    private static void createConnectionSource() throws SQLException {
-        connectionSource = new JdbcConnectionSource(DB_URL, username, password);
+    private static void createConnectionSource() {
+        try {
+            connectionSource = new JdbcConnectionSource(DB_URL, username, password);
+        } catch (SQLException e) {
+            throw new DataBaseException("Error while creating connection");
+        }
     }
 
     private Database() {
@@ -29,7 +34,7 @@ public class Database {
             dao = DaoManager.createDao(connectionSource, WatchlistEntity.class);
             createTables();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new DataBaseException("Error in connection to database!");
         }
     }
 
@@ -48,8 +53,11 @@ public class Database {
         return dao;
     }
 
-    private static void createTables() throws SQLException {
-        TableUtils.createTableIfNotExists(connectionSource, WatchlistEntity.class);
+    private static void createTables() {
+        try {
+            TableUtils.createTableIfNotExists(connectionSource, WatchlistEntity.class);
+        } catch (SQLException e) {
+            throw new DataBaseException("Error while creating a new table!");
+        }
     }
-
 }
