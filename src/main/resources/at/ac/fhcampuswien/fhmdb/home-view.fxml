@@ -42,25 +42,4 @@
       </padding>
    </HBox>
    <JFXListView fx:id="movieListView" prefHeight="186.0" prefWidth="570.0" style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
-   <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="347.0" spacing="20.0" style="-fx-background-color: black;">
-      <padding>
-         <Insets bottom="7.0" left="10.0" top="7.0" />
-      </padding>
-      <children>
-         <TextField fx:id="searchfieldDirectors" promptText="Search director" />
-         <JFXButton fx:id="searchDirectorsBtn" styleClass="background-yellow" stylesheets="@styles.css" text="GO" />
-         <Label styleClass="text-white" stylesheets="@styles.css" text="Amount of movies: " />
-         <Label fx:id="amountDirectors" prefHeight="17.0" prefWidth="62.0" styleClass="text-white" stylesheets="@styles.css" />
-      </children>
-   </HBox>
-   <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="347.0" spacing="20.0" style="-fx-background-color: black;">
-      <padding>
-         <Insets bottom="7.0" left="10.0" top="7.0" />
-      </padding>
-      <children>
-         <Label styleClass="text-white" stylesheets="@styles.css" text="Longest movie title: " />
-         <Label fx:id="longestMovie" prefHeight="17.0" prefWidth="62.0" styleClass="text-white" stylesheets="@styles.css" />
-         <Label layoutX="10.0" layoutY="26.0" styleClass="text-white" stylesheets="@styles.css" text="Most popular actor: " />
-         <Label fx:id="popularActor" layoutX="146.0" layoutY="26.0" prefHeight="17.0" prefWidth="62.0" styleClass="text-white" stylesheets="@styles.css" />
-      </children></HBox>
 </VBox>

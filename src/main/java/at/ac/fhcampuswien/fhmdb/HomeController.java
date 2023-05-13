@@ -34,12 +34,6 @@ public class HomeController implements Initializable {
     public JFXComboBox ratingComboBox;
     public JFXButton sortBtn;
 
-    @FXML
-    public Label longestMovie;
-    public Label popularActor;
-    public TextField searchfieldDirectors;
-    public JFXButton searchDirectorsBtn;
-    public Label amountDirectors;
     public JFXButton watchlistBtn;
 
 
@@ -141,14 +135,6 @@ public class HomeController implements Initializable {
             stage.getScene().setRoot(root);
             stage.show();
         });
-
-        //implementing the stream-methods from Exercise 2 to UI
-        longestMovie.setText(String.valueOf(getLongestMovieTitle(observableMovies)) + " Chars");
-        popularActor.setText(getMostPopularActor(observableMovies));
-        searchDirectorsBtn.setOnAction(actionEvent -> {
-            amountDirectors.setText(String.valueOf(countMoviesFrom(observableMovies, searchfieldDirectors.getText())));
-        });
-        //TO DO: getMoviesBetweenTwoYears - should this replace the filtering via parameters (URL)?
 
 
     }
