@@ -5,6 +5,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @DatabaseTable(tableName = "movie")
@@ -84,6 +85,18 @@ public class WatchlistEntity {
 
     public String getImgUrl() {
         return imgURL;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        WatchlistEntity other = (WatchlistEntity) obj;
+        return Objects.equals(this.title, other.title);
     }
 }
 
