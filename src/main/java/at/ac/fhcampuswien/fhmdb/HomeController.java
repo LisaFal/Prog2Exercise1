@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
+import at.ac.fhcampuswien.fhmdb.models.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
@@ -43,7 +44,9 @@ public class HomeController implements Initializable {
     private double ratingFrom = -1;
     public List<Movie> allMovies;
     private static final Double[] RATING_VALUES = {6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5};
-
+    private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
+        System.out.println("Adding " + clickedItem + " to the Database");
+    };
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
     public HomeController() {
@@ -62,7 +65,7 @@ public class HomeController implements Initializable {
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
-        movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
+        movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked, "Watchlist")); // use custom cell factory to display data
 
         // adding genre filter items
         genreComboBox.setPromptText("Filter by Genre");

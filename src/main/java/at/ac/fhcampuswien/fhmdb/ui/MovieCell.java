@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb.ui;
 
+import at.ac.fhcampuswien.fhmdb.models.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
@@ -38,7 +39,12 @@ public class MovieCell extends ListCell<Movie> {
     private final VBox vb = new VBox(title, detail, genre, releaseYear, rating, detailsBtn, btn);
     private final HBox layout = new HBox(vb, region, detailsBtn, btn);
 
-
+    public MovieCell(ClickEventHandler addToWatchListClicked, String btnText) {
+        super();
+        btn.setOnMouseClicked(mouseEvent -> { addToWatchListClicked.onClick(getItem());
+        });
+        btn.setText(btnText);
+    }
     @Override
     protected void updateItem(Movie movie, boolean empty) {
         super.updateItem(movie, empty);
@@ -58,19 +64,6 @@ public class MovieCell extends ListCell<Movie> {
             releaseYear.setText("Released: " + String.valueOf(movie.getReleaseYear()));
             rating.setText("Rating: "+ String.valueOf(movie.getRating()));
 
-            // Watchlist Button
-            if(movie.getMainCast() != null) {
-                btn.setText("Watchlist");
-                btn.setOnAction(event -> {
-                    //System.out.println(movie.getTitle());
-                });
-            }
-            else {
-                btn.setText("remove");
-                btn.setOnAction(event -> {
-                    //System.out.println(movie.getTitle());
-                });
-            }
             // Details Button
             detailsBtn.setOnAction(event -> {
                 // create Details Dialog
@@ -103,9 +96,9 @@ public class MovieCell extends ListCell<Movie> {
                 dialog.getDialogPane().getScene().getStylesheets().add(this.getScene().getStylesheets().get(0));
                 dialog.getDialogPane().getStyleClass().add("background-black");
                 grid.getStyleClass().add("background-light-black");
-                ButtonBar buttonBar = (ButtonBar)dialog.getDialogPane().lookup(".button-bar");
+                //ButtonBar buttonBar = (ButtonBar)dialog.getDialogPane().lookup(".button-bar");
                 //buttonBar.getStyleClass().add("background-yellow");
-                buttonBar.getButtons().forEach(b->b.setStyle("-fx-background-color: #f5c518;"));
+                //buttonBar.getButtons().forEach(b->b.setStyle("-fx-background-color: #f5c518;"));
                 //grid.setPadding(new Insets(10));
 
                 grid.add(title1, 1, 1);

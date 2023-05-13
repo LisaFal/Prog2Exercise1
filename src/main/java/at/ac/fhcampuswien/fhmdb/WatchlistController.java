@@ -1,6 +1,13 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.models.ClickEventHandler;
+import at.ac.fhcampuswien.fhmdb.models.Genre;
+import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,13 +17,34 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class WatchlistController implements Initializable {
     @FXML
     public JFXButton backBtn;
+    public JFXListView movieListView;
+    public List<Movie> watchlistMovies = new ArrayList<>();
+    private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
+    private final ClickEventHandler onRemoveFromWatchlistClicked = (clickedItem) -> {
+        System.out.println("Removing " + clickedItem + " from the Database");
+    };
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        List<Genre> g = new ArrayList<>();
+        g.add(Genre.ACTION);
+        String[] a = {"jo"};
+        String[] d = {"jo"};
+        String[] w = {"jo"};
+        Movie m = new Movie("123", "456", g, 1990, "789", "1011", 120, d, w, a, 8.9);
+
+        watchlistMovies.add(m);
+        observableMovies.addAll(watchlistMovies);
+
+        movieListView.setItems(observableMovies);
+        movieListView.setCellFactory(movieListView -> new MovieCell(onRemoveFromWatchlistClicked, "Remove"));
 
         // back to home view
         backBtn.setOnAction(actionEvent -> {
