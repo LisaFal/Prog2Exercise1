@@ -34,7 +34,8 @@ public class WatchlistEntity {
     private double rating;
 
     public WatchlistEntity() {}
-    public WatchlistEntity(String apiId, String title, String description, String genres, int releaseYear, String imgURL, int lengthInMinutes, double rating) {
+    public WatchlistEntity(long id, String apiId, String title, String description, String genres, int releaseYear, String imgURL, int lengthInMinutes, double rating) {
+        this.id = id;
         this.apiId = apiId;
         this.title = title;
         this.description = description;
