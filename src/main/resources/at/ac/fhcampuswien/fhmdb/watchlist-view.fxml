@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="331.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.fhmdb.WatchlistController">
+    <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="347.0" spacing="20.0" style="-fx-background-color: black;">
+        <padding>
+            <Insets bottom="7.0" left="10.0" top="7.0" right="10.0" />
+        </padding>
+        <children>
+            <Label style="-fx-background-color: F5C518;" text="FHMDb">
+                <font>
+                    <Font name="Calibri Bold" size="24.0" />
+                </font>
+                <padding>
+                    <Insets left="2.0" right="2.0" />
+                </padding>
+            </Label>
+            <Label styleClass="text-white" stylesheets="@styles.css" text="Your Watchlist!" />
+            <Region HBox.hgrow="ALWAYS"/>
+            <JFXButton alignment="CENTER_RIGHT" fx:id="backBtn" styleClass="background-yellow" stylesheets="@styles.css" text="go back" />
+        </children>
+    </HBox>
+    <JFXListView fx:id="movieListView" prefHeight="186.0" prefWidth="570.0" style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
+    <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="347.0" spacing="20.0" style="-fx-background-color: black;">
+        <padding>
+            <Insets bottom="7.0" left="10.0" top="7.0" />
+        </padding>
+        <children>
+        </children></HBox>
+</VBox>

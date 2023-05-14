@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
+import at.ac.fhcampuswien.fhmdb.models.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
@@ -10,9 +11,14 @@ import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,12 +35,7 @@ public class HomeController implements Initializable {
     public JFXComboBox ratingComboBox;
     public JFXButton sortBtn;
 
-    @FXML
-    public Label longestMovie;
-    public Label popularActor;
-    public TextField searchfieldDirectors;
-    public JFXButton searchDirectorsBtn;
-    public Label amountDirectors;
+    public JFXButton watchlistBtn;
 
 
     private String query = null;
@@ -43,7 +44,9 @@ public class HomeController implements Initializable {
     private double ratingFrom = -1;
     public List<Movie> allMovies;
     private static final Double[] RATING_VALUES = {6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5};
-
+    private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
+        System.out.println("Adding " + clickedItem + " to the Database");
+    };
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
     public HomeController() {
@@ -62,7 +65,7 @@ public class HomeController implements Initializable {
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
-        movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
+        movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked, "Watchlist")); // use custom cell factory to display data
 
         // adding genre filter items
         genreComboBox.setPromptText("Filter by Genre");
@@ -124,13 +127,17 @@ public class HomeController implements Initializable {
             }
         });
 
-        //implementing the stream-methods from Exercise 2 to UI
-        longestMovie.setText(String.valueOf(getLongestMovieTitle(observableMovies)) + " Chars");
-        popularActor.setText(getMostPopularActor(observableMovies));
-        searchDirectorsBtn.setOnAction(actionEvent -> {
-            amountDirectors.setText(String.valueOf(countMoviesFrom(observableMovies, searchfieldDirectors.getText())));
+        watchlistBtn.setOnAction(actionEvent -> {
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("watchlist-view.fxml"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow() ;
+            stage.getScene().setRoot(root);
+            stage.show();
         });
-        //TO DO: getMoviesBetweenTwoYears - should this replace the filtering via parameters (URL)?
 
 
     }
