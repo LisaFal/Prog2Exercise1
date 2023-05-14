@@ -28,14 +28,20 @@ public class FhmdbApplication extends Application {
 
 
         //Testeinträge für die Datenbank //ACHTUNG: wenn table MOVIE offen, kann das nicht ausgeführt werden!
+        /*
         WatchlistEntity movie = new WatchlistEntity("Was ist das?", "Titanic", "A ship movie", "COMEDY", 1999, "movie.com", 134, 8.7);
         WatchlistEntity movie2 = new WatchlistEntity("Was ist das?", "Titanic Teil 2", "A ship movie", "COMEDY", 1999, "movie.com", 134, 8.7);
         WatchlistRepository repo = new WatchlistRepository();
+
+         */
         //repo.addToWatchlist(movie);
         //repo.addToWatchlist(movie2);
 
         /*System.out.println(repo.getAll().get(0).getTitle());*/
         //repo.removeFromWatchlist(movie);
+
+
+
     }
 
     public static void main(String[] args) {
