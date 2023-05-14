@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.fhmdb.database;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.dao.Dao;
 import exceptions.DataBaseException;
+import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,6 +22,7 @@ public class WatchlistRepository {
             List<WatchlistEntity> entities = dao.queryForAll();
             for (WatchlistEntity entity : entities) {
                 if (entity.equals(movie)) {
+                    displayErrorPopup("Movie already on the watchlist!");
                     return;
                 }
             }
@@ -30,14 +32,13 @@ public class WatchlistRepository {
         }
     }
 
-
     public void removeFromWatchlist(WatchlistEntity movie) {
         try {
             List<WatchlistEntity> entities = dao.queryForAll();
             for (WatchlistEntity entity : entities) {
                 if (entity.equals(movie)) {
                     dao.delete(entity); // delete the matching entity
-                }
+                 }
                 }
             } catch(SQLException e) {
             throw new DataBaseException("Error while removing a movie!", e);
@@ -50,6 +51,13 @@ public class WatchlistRepository {
         } catch (SQLException e) {
             throw new DataBaseException("Error while getting watchlist!", e);
         }
+    }
+
+    public static void displayErrorPopup(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Something went wrong!");
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
     }
 
 }
