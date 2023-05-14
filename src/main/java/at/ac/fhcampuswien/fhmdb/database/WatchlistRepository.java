@@ -18,10 +18,13 @@ public class WatchlistRepository {
 
     public void addToWatchlist(WatchlistEntity movie) throws DataBaseException {
         try {
-            genres = movie.getGenres();
-            WatchlistEntity movieEntry = new WatchlistEntity("?", movie.getTitle(), movie.getDescription(), genres, movie.getReleaseYear(),
-                    movie.getImgUrl(), movie.getLengthInMinutes(), movie.getRating());
-            dao.create(movieEntry);
+            List<WatchlistEntity> entities = dao.queryForAll();
+            for (WatchlistEntity entity : entities) {
+                if (entity.equals(movie)) {
+                    return;
+                }
+            }
+            dao.create(movie);
         } catch (SQLException e) {
             throw new DataBaseException("Error while adding a movie to watchlist!", e);
         }
