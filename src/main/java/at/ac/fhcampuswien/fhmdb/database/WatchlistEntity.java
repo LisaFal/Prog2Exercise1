@@ -1,9 +1,11 @@
 package at.ac.fhcampuswien.fhmdb.database;
 
 import at.ac.fhcampuswien.fhmdb.models.Genre;
+import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -41,6 +43,16 @@ public class WatchlistEntity {
         this.imgURL = imgURL;
         this.lengthInMinutes = lengthInMinutes;
         this.rating = rating;
+    }
+    public WatchlistEntity(Movie movie) {
+        this.apiId = movie.getId();
+        this.title = movie.getTitle();
+        this.description = movie.getDescription();
+        this.genres = genresToString(movie.getGenres());
+        this.releaseYear = movie.getReleaseYear();
+        this.imgURL = movie.getImgUrl();
+        this.lengthInMinutes = movie.getLengthInMinutes();
+        this.rating = movie.getRating();
     }
 
     public long getId() {

@@ -1,6 +1,8 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
+import at.ac.fhcampuswien.fhmdb.database.WatchlistEntity;
+import at.ac.fhcampuswien.fhmdb.database.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.models.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
@@ -44,9 +46,12 @@ public class HomeController implements Initializable {
     private int releaseYear = -1;
     private double ratingFrom = -1;
     public List<Movie> allMovies;
+    private WatchlistRepository  repo = new WatchlistRepository();
     private static final Double[] RATING_VALUES = {6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5};
+
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
         System.out.println("Adding " + clickedItem + " to the Database");
+        repo.addToWatchlist(new WatchlistEntity((Movie) clickedItem));
     };
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 

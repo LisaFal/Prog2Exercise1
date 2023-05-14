@@ -1,5 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.database.WatchlistEntity;
+import at.ac.fhcampuswien.fhmdb.database.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.models.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class WatchlistController implements Initializable {
     @FXML
@@ -28,8 +31,11 @@ public class WatchlistController implements Initializable {
     public JFXListView movieListView;
     public List<Movie> watchlistMovies = new ArrayList<>();
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
+    WatchlistRepository repo = new WatchlistRepository();
     private final ClickEventHandler onRemoveFromWatchlistClicked = (clickedItem) -> {
         System.out.println("Removing " + clickedItem + " from the Database");
+        repo.removeFromWatchlist(new WatchlistEntity((Movie) clickedItem));
+        observableMovies.remove((Movie) clickedItem);
     };
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,7 +46,8 @@ public class WatchlistController implements Initializable {
         String[] w = {"jo"};
         Movie m = new Movie("123", "456", g, 1990, "789", "1011", 120, d, w, a, 8.9);
 
-        watchlistMovies.add(m);
+        // Fill the watchlist with movies from db
+        watchlistMovies.addAll(repo.getAll().stream().map(we -> new Movie(we)).collect(Collectors.toList()));
         observableMovies.addAll(watchlistMovies);
 
         movieListView.setItems(observableMovies);

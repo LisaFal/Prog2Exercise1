@@ -1,5 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
+import at.ac.fhcampuswien.fhmdb.database.WatchlistEntity;
+
 import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ public class Movie {
     //new constructor
     public Movie(String id, String title, List<Genre> genres, int releaseYear, String description, String imgUrl,
                  int lengthInMinutes, String[] directors, String[] writers, String[] mainCast, double rating) {
+        this.id = id;
         this.title = title;
         this.genres = genres;
         this.releaseYear = releaseYear;
@@ -39,6 +42,20 @@ public class Movie {
         this.writers = writers;
         this.mainCast = mainCast;
         this.rating = rating;
+    }
+    public Movie(WatchlistEntity w) {
+        this.id = w.getApiId();
+        this.title = w.getTitle();
+        this.genres = stringToGenres(w.getGenres());
+        this.releaseYear = w.getReleaseYear();
+        this.description = w.getDescription();
+        this.imgUrl = w.getImgUrl();
+        this.lengthInMinutes = w.getLengthInMinutes();
+        String[] placeholder = {" "};
+        this.directors = placeholder;
+        this.writers = placeholder;
+        this.mainCast = placeholder;
+        this.rating = w.getRating();
     }
 
     public String getTitle() {
@@ -61,7 +78,7 @@ public class Movie {
     public String[] getMainCast() { return mainCast; }
     public double getRating() { return rating; }
 
-
+    public String getId() { return id; }
     /*
     public static List<Movie> initializeMovies() {
 
@@ -111,6 +128,13 @@ public class Movie {
     public static List<Movie> sortingDes(List<Movie> list) {
         list.sort(Comparator.comparing(Movie::getTitle).reversed());
         return list;
+    }
+
+    // convert Array of Strings to List of Genres
+    public List<Genre> stringToGenres(String s) {
+        String[] array = s.split(", ");
+        List<Genre> genres = Arrays.stream(array).map(g -> (Genre.valueOf(g))).toList();
+        return genres;
     }
 
     //NOT NEEDED AT THE MOMENT - still here for the tests
