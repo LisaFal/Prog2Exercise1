@@ -75,7 +75,7 @@ public class MovieCell extends ListCell<Movie> {
                 Label title1 = new Label("Title: ");
                 Label title2 = new Label(movie.getTitle());
                 Label genres1 = new Label("Genres: ");
-                Label genres2 = new Label(movie.getGenres().toString());
+                Label genres2 = new Label(movie.getGenres().toString().replace("[", "").replace("]", ""));
                 Label release1 = new Label("Released: ");
                 Label release2 = new Label("" + movie.getReleaseYear());
                 //Label cast1 = new Label("Cast: ");
