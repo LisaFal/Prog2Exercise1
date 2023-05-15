@@ -20,7 +20,7 @@ public class Database {
     //singleton pattern
     private static Database instance;
 
-    private static void createConnectionSource() {
+    private static void createConnectionSource() throws DataBaseException {
         try {
             connectionSource = new JdbcConnectionSource(DB_URL, username, password);
         } catch (SQLException e) {
@@ -28,7 +28,7 @@ public class Database {
         }
     }
 
-    private Database() {
+    private Database() throws DataBaseException {
         try {
             createConnectionSource();
             dao = DaoManager.createDao(connectionSource, WatchlistEntity.class);
@@ -53,7 +53,7 @@ public class Database {
         return dao;
     }
 
-    private static void createTables() {
+    private static void createTables() throws DataBaseException {
         try {
             TableUtils.createTableIfNotExists(connectionSource, WatchlistEntity.class);
         } catch (SQLException e) {

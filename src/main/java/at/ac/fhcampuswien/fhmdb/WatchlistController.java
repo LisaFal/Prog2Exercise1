@@ -37,47 +37,29 @@ public class WatchlistController implements Initializable {
     public JFXListView movieListView;
     public List<Movie> watchlistMovies = new ArrayList<>();
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();
-    WatchlistRepository repo = new WatchlistRepository();
+
     private final ClickEventHandler onRemoveFromWatchlistClicked = (clickedItem) -> {
-        /*
-        System.out.println("Removing " + clickedItem + " from the Database");
-        repo.removeFromWatchlist(new WatchlistEntity((Movie) clickedItem));
-        observableMovies.remove((Movie) clickedItem);
 
-         */
-
-        System.out.println("Removing " + clickedItem + " from the Database");
         try {
+            WatchlistRepository repo = new WatchlistRepository();
             repo.removeFromWatchlist(new WatchlistEntity((Movie) clickedItem));
             observableMovies.remove((Movie) clickedItem);
         } catch (DataBaseException e) {
-            showError("Fehler beim Entfernen des Films von der Watchlist: " + e.getMessage());
-            //throw new DataBaseException("Fehler beim Entfernen des Films von der Watchlist: " + e);
+            showError(e);
         }
 
     };
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        List<Genre> g = new ArrayList<>();
-        g.add(Genre.ACTION);
-        String[] a = {"jo"};
-        String[] d = {"jo"};
-        String[] w = {"jo"};
-        Movie m = new Movie("123", "456", g, 1990, "789", "1011", 120, d, w, a, 8.9);
 
         // Fill the watchlist with movies from db
-
-        /*
-        watchlistMovies.addAll(repo.getAll().stream().map(we -> new Movie(we)).collect(Collectors.toList()));
-        observableMovies.addAll(watchlistMovies);
-         */
-
         try {
+            WatchlistRepository repo = new WatchlistRepository();
             watchlistMovies.addAll(repo.getAll().stream().map(we -> new Movie(we)).collect(Collectors.toList()));
             observableMovies.addAll(watchlistMovies);
         } catch (DataBaseException e) {
-            showError("Fehler beim Laden der Watchlist: " + e.getMessage());
+            showError(e);
         }
 
 
@@ -86,25 +68,12 @@ public class WatchlistController implements Initializable {
 
         // back to home view
         backBtn.setOnAction(actionEvent -> {
-            /*
+
             Parent root = null;
             try {
                 root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow() ;
-            stage.getScene().setRoot(root);
-            stage.show();
-
-             */
-            Parent root = null;
-            try {
-                root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
-
-            } catch (IOException e) {
-
-                showError("There was an error loading the Home View. Please try again or contact support: " + e.getMessage());
+            } catch (Exception e) {
+                showError(e);
                 return;
             }
             Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow() ;
@@ -113,11 +82,10 @@ public class WatchlistController implements Initializable {
         });
     }
 
-    private static void showError(String message) {
+    private static void showError(Exception e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Fehler");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setTitle("Something went wrong!");
+        alert.setContentText(e.getMessage());
         alert.showAndWait();
     }
 }

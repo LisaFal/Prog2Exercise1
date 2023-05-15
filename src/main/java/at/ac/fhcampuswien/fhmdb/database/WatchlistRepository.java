@@ -22,8 +22,7 @@ public class WatchlistRepository {
             List<WatchlistEntity> entities = dao.queryForAll();
             for (WatchlistEntity entity : entities) {
                 if (entity.equals(movie)) {
-                    displayErrorPopup("Movie already on the watchlist!");
-                    return;
+                    throw  new DataBaseException("Movie already in watchlist");
                 }
             }
             dao.create(movie);
@@ -51,13 +50,6 @@ public class WatchlistRepository {
         } catch (SQLException e) {
             throw new DataBaseException("Error while getting watchlist!", e);
         }
-    }
-
-    public static void displayErrorPopup(String errorMessage) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Something went wrong!");
-        alert.setContentText(errorMessage);
-        alert.showAndWait();
     }
 
 }

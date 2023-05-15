@@ -34,17 +34,7 @@ public class WatchlistEntity {
     private double rating;
 
     public WatchlistEntity() {}
-    public WatchlistEntity(long id, String apiId, String title, String description, String genres, int releaseYear, String imgURL, int lengthInMinutes, double rating) {
-        this.id = id;
-        this.apiId = apiId;
-        this.title = title;
-        this.description = description;
-        this.genres = genres;
-        this.releaseYear = releaseYear;
-        this.imgURL = imgURL;
-        this.lengthInMinutes = lengthInMinutes;
-        this.rating = rating;
-    }
+
     public WatchlistEntity(Movie movie) {
         this.apiId = movie.getId();
         this.title = movie.getTitle();

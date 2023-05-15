@@ -78,8 +78,6 @@ public class MovieCell extends ListCell<Movie> {
                 Label genres2 = new Label(movie.getGenres().toString().replace("[", "").replace("]", ""));
                 Label release1 = new Label("Released: ");
                 Label release2 = new Label("" + movie.getReleaseYear());
-                //Label cast1 = new Label("Cast: ");
-                //Label cast2 = new Label(Arrays.toString(movie.getMainCast()));
                 Label length1 = new Label("Length: ");
                 Label length2 = new Label("" + movie.getLengthInMinutes());
                 Label rating1 = new Label("Rating: ");
@@ -91,15 +89,9 @@ public class MovieCell extends ListCell<Movie> {
                 Label desc2 = new Label("");
 
                 // Style
-                //grid.setStyle("-fx-background-color: #454545; -fx-text-fill: #454545;");
-                //dialog.getDialogPane().setStyle("-fx-background-color: #000000;");
                 dialog.getDialogPane().getScene().getStylesheets().add(this.getScene().getStylesheets().get(0));
                 dialog.getDialogPane().getStyleClass().add("background-black");
                 grid.getStyleClass().add("background-light-black");
-                //ButtonBar buttonBar = (ButtonBar)dialog.getDialogPane().lookup(".button-bar");
-                //buttonBar.getStyleClass().add("background-yellow");
-                //buttonBar.getButtons().forEach(b->b.setStyle("-fx-background-color: #f5c518;"));
-                //grid.setPadding(new Insets(10));
 
                 grid.add(title1, 1, 1);
                 grid.add(title2, 2, 1);
@@ -107,8 +99,6 @@ public class MovieCell extends ListCell<Movie> {
                 grid.add(genres2, 2, 2);
                 grid.add(release1, 1, 3);
                 grid.add(release2, 2, 3);
-                //grid.add(cast1, 1, 4);
-                //grid.add(cast2, 2, 4);
                 grid.add(length1, 1, 5);
                 grid.add(length2, 2, 5);
                 grid.add(rating1, 1, 6);
@@ -122,7 +112,6 @@ public class MovieCell extends ListCell<Movie> {
                     l.getStyleClass().add("text-white");
                     l.setPadding(new Insets(2));
                 });
-                //dialog.setContentText("This is a sample dialog");
                 dialog.getDialogPane().getButtonTypes().add(type);
                 dialog.showAndWait();
 

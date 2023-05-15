@@ -63,7 +63,7 @@ public class MovieAPI {
             Gson gson = new Gson();
             Movie[] movies = gson.fromJson(response, Movie[].class);
             return Arrays.asList(movies);
-        } catch (MovieAPIException exception) {
+        } catch (Exception exception) {
             throw new MovieAPIException("Something went wrong with fetching data from your API!", exception);
         }
     }

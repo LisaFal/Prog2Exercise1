@@ -10,6 +10,7 @@ import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import exceptions.DataBaseException;
 import exceptions.MovieAPIException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -46,12 +48,17 @@ public class HomeController implements Initializable {
     private int releaseYear = -1;
     private double ratingFrom = -1;
     public List<Movie> allMovies;
-    private WatchlistRepository  repo = new WatchlistRepository();
+
     private static final Double[] RATING_VALUES = {6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5};
 
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
-        System.out.println("Adding " + clickedItem + " to the Database");
-        repo.addToWatchlist(new WatchlistEntity((Movie) clickedItem));
+        try {
+            WatchlistRepository  repo = new WatchlistRepository();
+            repo.addToWatchlist(new WatchlistEntity((Movie) clickedItem));
+        } catch(DataBaseException dbe) {
+            displayErrorPopup(dbe);
+        }
+
     };
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
@@ -62,12 +69,14 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         { //initializing the movielist
             try {
+                // add movie data to observable list
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
+                observableMovies.addAll(allMovies);
             } catch (MovieAPIException e) {
-              //  throw new RuntimeException(e);
+              displayErrorPopup(e);
             }
         }
-        observableMovies.addAll(allMovies);         // add movie data to observable list
+
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
@@ -80,10 +89,13 @@ public class HomeController implements Initializable {
 
         //adding release year filter items
         List<Integer> years = new ArrayList<>();
-        for(Movie m : allMovies) {
-            if(!years.contains(m.getReleaseYear()))
-                years.add(m.getReleaseYear());
+        if(allMovies != null) {
+            for(Movie m : allMovies) {
+                if(!years.contains(m.getReleaseYear()))
+                    years.add(m.getReleaseYear());
+            }
         }
+
         Collections.sort(years);
         releaseYearComboBox.setPromptText("Filter by Release Year");
         releaseYearComboBox.getItems().add("-- NO FILTER --");
@@ -113,13 +125,11 @@ public class HomeController implements Initializable {
                 } else { ratingFrom = -1; }
             try {
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
+                observableMovies.setAll(allMovies);
             } catch (MovieAPIException exception) {
-               // throw new RuntimeException(exception);
+               displayErrorPopup(exception);
             }
-            observableMovies.setAll(allMovies);
 
-            //used only when filter via filterMovies:
-            //observableMovies.setAll(filterMovies(genreComboBox.getSelectionModel().getSelectedItem(), searchField.getText(), allMovies));
         });
 
         // Sort button
@@ -188,5 +198,11 @@ public class HomeController implements Initializable {
         return movies.stream()
                 .filter(movie -> movie.getReleaseYear() >= startYear && movie.getReleaseYear() <= endYear)
                 .collect(Collectors.toList());
+    }
+    private static void displayErrorPopup(Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Something went wrong!");
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
     }
 }
