@@ -51,24 +51,13 @@ public class WatchlistController implements Initializable {
             repo.removeFromWatchlist(new WatchlistEntity((Movie) clickedItem));
             observableMovies.remove((Movie) clickedItem);
         } catch (DataBaseException e) {
-            //showError("Fehler beim Entfernen des Films von der Watchlist: " + e.getMessage());
-            throw new DataBaseException("Fehler beim Entfernen des Films von der Watchlist: " + e);
+            showError("Fehler beim Entfernen des Films von der Watchlist: " + e.getMessage());
+            //throw new DataBaseException("Fehler beim Entfernen des Films von der Watchlist: " + e);
         }
 
     };
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        /*
-        //test pop up alert
-        Alert testAlert = new Alert(AlertType.INFORMATION);
-        testAlert.setTitle("Test");
-        testAlert.setHeaderText("Test Popup");
-        testAlert.setContentText("This is a test popup.");
-        testAlert.showAndWait();
-
-         */
-
 
         List<Genre> g = new ArrayList<>();
         g.add(Genre.ACTION);
@@ -112,21 +101,19 @@ public class WatchlistController implements Initializable {
             Parent root = null;
             try {
                 root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
-                Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow() ;
-                stage.getScene().setRoot(root);
-                stage.show();
+
             } catch (IOException e) {
 
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Error loading Home View");
-                alert.setContentText("There was an error loading the Home View. Please try again or contact support.");
-                alert.showAndWait();
+                showError("There was an error loading the Home View. Please try again or contact support: " + e.getMessage());
+                return;
             }
+            Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow() ;
+            stage.getScene().setRoot(root);
+            stage.show();
         });
     }
 
-    private void showError(String message) {
+    private static void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Fehler");
         alert.setHeaderText(null);
