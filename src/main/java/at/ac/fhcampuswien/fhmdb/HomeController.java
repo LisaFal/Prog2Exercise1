@@ -4,6 +4,10 @@ import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.database.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.database.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.models.*;
+import at.ac.fhcampuswien.fhmdb.state_pattern.Sorter;
+import at.ac.fhcampuswien.fhmdb.state_pattern.StateNotSorted;
+import at.ac.fhcampuswien.fhmdb.state_pattern.StateSortedAsc;
+import at.ac.fhcampuswien.fhmdb.state_pattern.StateSortedDesc;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -17,9 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -58,11 +60,11 @@ public class HomeController implements Initializable {
 
     };
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
-
-
     private Sorter moviesorter = new Sorter();
     private ObservableList<Movie> filteredMovies;
     private ObservableList<Movie> sortedMovies;
+
+
     public HomeController() {
     };
 
@@ -124,8 +126,10 @@ public class HomeController implements Initializable {
         ratingComboBox.getItems().add("-- NO FILTER --");
         ratingComboBox.getItems().addAll(ratings);
 
+
         filteredMovies = FXCollections.observableArrayList();
         sortedMovies = FXCollections.observableArrayList();
+
         // adding event handler to search button
         searchBtn.setText("SEARCH");
         searchBtn.setOnAction(e -> {

@@ -120,15 +120,6 @@ public class Movie {
         return filteredMovies;
     }
 
-    public static List<Movie> sortingAsc(List<Movie> list) {
-        list.sort(Comparator.comparing(Movie::getTitle));
-        return list;
-    }
-
-    public static List<Movie> sortingDes(List<Movie> list) {
-        list.sort(Comparator.comparing(Movie::getTitle).reversed());
-        return list;
-    }
 
     // convert Array of Strings to List of Genres
     public List<Genre> stringToGenres(String s) {

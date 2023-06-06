@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.fhmdb.api;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import org.junit.jupiter.api.Test;
 
+import static at.ac.fhcampuswien.fhmdb.api.MovieAPI.URL_START;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MovieAPITest {
@@ -13,7 +14,12 @@ class MovieAPITest {
         String expectedUrl = "http://prog2.fh-campuswien.ac.at/movies";
 
         // when
-        String actualUrl = MovieAPI.createUrl(null, null, -1, -1);
+        String actualUrl = new MovieAPIRequestBuilder(URL_START)
+                .query(null)
+                .genre(null)
+                .releaseYear(-1)
+                .ratingFrom(-1)
+                .build();
 
         // then
         assertEquals(expectedUrl, actualUrl);
@@ -24,7 +30,13 @@ class MovieAPITest {
         String expectedUrl = "http://prog2.fh-campuswien.ac.at/movies?query=test";
 
         // when
-        String actualUrl = MovieAPI.createUrl("test", null, -1, -1);
+
+        String actualUrl = new MovieAPIRequestBuilder(URL_START)
+                .query("test")
+                .genre(null)
+                .releaseYear(-1)
+                .ratingFrom(-1)
+                .build();
 
         // then
         assertEquals(expectedUrl, actualUrl);
@@ -35,8 +47,12 @@ class MovieAPITest {
         String expectedUrl = "http://prog2.fh-campuswien.ac.at/movies?query=test&genre=DRAMA";
 
         // when
-        String actualUrl = MovieAPI.createUrl("test", Genre.DRAMA, -1, -1);
-
+        String actualUrl = new MovieAPIRequestBuilder(URL_START)
+                .query("test")
+                .genre(Genre.DRAMA)
+                .releaseYear(-1)
+                .ratingFrom(-1)
+                .build();
         // then
         assertEquals(expectedUrl, actualUrl);
     }
@@ -46,7 +62,12 @@ class MovieAPITest {
         String expectedUrl = "http://prog2.fh-campuswien.ac.at/movies?query=test&genre=DRAMA&releaseYear=1990";
 
         // when
-        String actualUrl = MovieAPI.createUrl("test", Genre.DRAMA, 1990, -1);
+        String actualUrl = new MovieAPIRequestBuilder(URL_START)
+                .query("test")
+                .genre(Genre.DRAMA)
+                .releaseYear(1990)
+                .ratingFrom(-1)
+                .build();
 
         // then
         assertEquals(expectedUrl, actualUrl);
@@ -57,7 +78,12 @@ class MovieAPITest {
         String expectedUrl = "http://prog2.fh-campuswien.ac.at/movies?query=test&genre=DRAMA&releaseYear=1990&ratingFrom=1.0";
 
         // when
-        String actualUrl = MovieAPI.createUrl("test", Genre.DRAMA, 1990, 1.0);
+        String actualUrl = new MovieAPIRequestBuilder(URL_START)
+                .query("test")
+                .genre(Genre.DRAMA)
+                .releaseYear(1990)
+                .ratingFrom(1.0)
+                .build();
 
         // then
         assertEquals(expectedUrl, actualUrl);

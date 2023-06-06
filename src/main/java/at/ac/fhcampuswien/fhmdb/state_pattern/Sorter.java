@@ -1,4 +1,6 @@
-package at.ac.fhcampuswien.fhmdb.models;
+package at.ac.fhcampuswien.fhmdb.state_pattern;
+
+import at.ac.fhcampuswien.fhmdb.models.Movie;
 
 import java.util.List;
 
@@ -6,7 +8,7 @@ public class Sorter {
     private State currentState;
 
     public Sorter() {
-        // Initialer Zustand ist StateNotSorted
+        // bei Öffnen des Programms ist Zustand StateNotSorted
         currentState = new StateNotSorted();
     }
 
