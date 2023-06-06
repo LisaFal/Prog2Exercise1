@@ -3,9 +3,7 @@ package at.ac.fhcampuswien.fhmdb;
 import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.database.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.database.WatchlistRepository;
-import at.ac.fhcampuswien.fhmdb.models.ClickEventHandler;
-import at.ac.fhcampuswien.fhmdb.models.Genre;
-import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.models.*;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -39,7 +37,6 @@ public class HomeController implements Initializable {
     public JFXComboBox releaseYearComboBox;
     public JFXComboBox ratingComboBox;
     public JFXButton sortBtn;
-
     public JFXButton watchlistBtn;
 
 
@@ -62,8 +59,28 @@ public class HomeController implements Initializable {
     };
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
+
+    private Sorter moviesorter = new Sorter();
+    private ObservableList<Movie> filteredMovies;
+    private ObservableList<Movie> sortedMovies;
     public HomeController() {
+    };
+
+    public List<Movie> getMoviesFromAPI() {
+        moviesorter.setState(new StateNotSorted());
+        return moviesorter.sort(observableMovies);
     }
+
+    public List<Movie> sortMoviesAscending(List<Movie> movieList) {
+        moviesorter.setState(new StateSortedAsc());
+        return moviesorter.sort(new ArrayList<>(movieList));
+    }
+
+    public List <Movie> sortMoviesDescending(List<Movie> movieList) {
+        moviesorter.setState(new StateSortedDesc());
+        return moviesorter.sort(new ArrayList<>(movieList));
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,7 +96,7 @@ public class HomeController implements Initializable {
 
 
         // initialize UI stuff
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
+        movieListView.setItems((ObservableList) getMoviesFromAPI());   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked, "Watchlist")); // use custom cell factory to display data
 
         // adding genre filter items
@@ -107,7 +124,10 @@ public class HomeController implements Initializable {
         ratingComboBox.getItems().add("-- NO FILTER --");
         ratingComboBox.getItems().addAll(ratings);
 
+        filteredMovies = FXCollections.observableArrayList();
+        sortedMovies = FXCollections.observableArrayList();
         // adding event handler to search button
+        searchBtn.setText("SEARCH");
         searchBtn.setOnAction(e -> {
             if (searchField.getText() != null) { query = searchField.getText();
                 } else { query = null; }
@@ -125,7 +145,14 @@ public class HomeController implements Initializable {
                 } else { ratingFrom = -1; }
             try {
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
-                observableMovies.setAll(allMovies);
+                filteredMovies.setAll(allMovies);
+                if(sortBtn.getText().equals("Sort (desc)")) {
+                    sortedMovies.setAll(sortMoviesAscending(new ArrayList<>(filteredMovies)));
+                    observableMovies.setAll(sortedMovies);
+                } else {
+                    sortedMovies.setAll(sortMoviesDescending(new ArrayList<>(filteredMovies)));
+                    observableMovies.setAll(sortedMovies);
+                }
             } catch (MovieAPIException exception) {
                displayErrorPopup(exception);
             }
@@ -135,10 +162,14 @@ public class HomeController implements Initializable {
         // Sort button
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
-                Movie.sortingAsc(observableMovies);
+                filteredMovies = observableMovies;
+                sortedMovies.setAll(sortMoviesAscending(new ArrayList<>(filteredMovies)));
+                observableMovies.setAll(sortedMovies);
                 sortBtn.setText("Sort (desc)");
             } else {
-                Movie.sortingDes(observableMovies);
+                filteredMovies = observableMovies;
+                sortedMovies.setAll(sortMoviesDescending(new ArrayList<>(filteredMovies)));
+                observableMovies.setAll(sortedMovies);
                 sortBtn.setText("Sort (asc)");
             }
         });
