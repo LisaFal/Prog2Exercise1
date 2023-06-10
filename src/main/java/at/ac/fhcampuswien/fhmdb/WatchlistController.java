@@ -41,7 +41,7 @@ public class WatchlistController implements Initializable {
     private final ClickEventHandler onRemoveFromWatchlistClicked = (clickedItem) -> {
 
         try {
-            WatchlistRepository repo = new WatchlistRepository();
+            WatchlistRepository repo = WatchlistRepository.getInstance();
             repo.removeFromWatchlist(new WatchlistEntity((Movie) clickedItem));
             observableMovies.remove((Movie) clickedItem);
         } catch (DataBaseException e) {
@@ -55,7 +55,7 @@ public class WatchlistController implements Initializable {
 
         // Fill the watchlist with movies from db
         try {
-            WatchlistRepository repo = new WatchlistRepository();
+            WatchlistRepository repo = WatchlistRepository.getInstance();
             watchlistMovies.addAll(repo.getAll().stream().map(we -> new Movie(we)).collect(Collectors.toList()));
             observableMovies.addAll(watchlistMovies);
         } catch (DataBaseException e) {
