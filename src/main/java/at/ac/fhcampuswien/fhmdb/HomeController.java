@@ -52,7 +52,7 @@ public class HomeController implements Initializable {
 
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
         try {
-            WatchlistRepository  repo = new WatchlistRepository();
+            WatchlistRepository  repo = WatchlistRepository.getInstance();
             repo.addToWatchlist(new WatchlistEntity((Movie) clickedItem));
         } catch(DataBaseException dbe) {
             displayErrorPopup(dbe);

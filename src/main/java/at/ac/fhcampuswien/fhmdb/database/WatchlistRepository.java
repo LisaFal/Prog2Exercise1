@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class WatchlistRepository {
-    Dao<WatchlistEntity, Long> dao;
-    String genres;
+    private Dao<WatchlistEntity, Long> dao;
+    private String genres;
 
-    public WatchlistRepository() {
+    private static WatchlistRepository instance;
+
+    private WatchlistRepository() {
         this.dao = Database.getDatabase().getDao();
     }
 
@@ -37,9 +39,9 @@ public class WatchlistRepository {
             for (WatchlistEntity entity : entities) {
                 if (entity.equals(movie)) {
                     dao.delete(entity); // delete the matching entity
-                 }
                 }
-            } catch(SQLException e) {
+            }
+        } catch(SQLException e) {
             throw new DataBaseException("Error while removing a movie!", e);
         }
     }
@@ -50,6 +52,13 @@ public class WatchlistRepository {
         } catch (SQLException e) {
             throw new DataBaseException("Error while getting watchlist!", e);
         }
+    }
+
+    public static synchronized WatchlistRepository getInstance() {
+        if(instance == null) {
+            instance = new WatchlistRepository();
+        }
+        return instance;
     }
 
 }
