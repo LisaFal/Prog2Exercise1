@@ -49,6 +49,12 @@ public class WatchlistController implements Initializable {
         }
 
     };
+
+    private static WatchlistController instance;
+
+    private WatchlistController() {
+
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -71,7 +77,10 @@ public class WatchlistController implements Initializable {
 
             Parent root = null;
             try {
-                root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
+                ControllerFactory cf = new ControllerFactory();
+                FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource("home-view.fxml"));
+                fxmlLoader.setControllerFactory(cf);
+                root = fxmlLoader.load();
             } catch (Exception e) {
                 showError(e);
                 return;
@@ -87,5 +96,12 @@ public class WatchlistController implements Initializable {
         alert.setTitle("Something went wrong!");
         alert.setContentText(e.getMessage());
         alert.showAndWait();
+    }
+
+    public static WatchlistController getInstance() {
+        if(instance == null) {
+            instance = new WatchlistController();
+        }
+        return instance;
     }
 }

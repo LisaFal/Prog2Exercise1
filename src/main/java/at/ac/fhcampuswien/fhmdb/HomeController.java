@@ -63,9 +63,10 @@ public class HomeController implements Initializable {
     private Sorter moviesorter = new Sorter();
     private ObservableList<Movie> filteredMovies;
     private ObservableList<Movie> sortedMovies;
+    private static HomeController instance;
 
+    private HomeController() {
 
-    public HomeController() {
     };
 
     public List<Movie> getMoviesFromAPI() {
@@ -181,7 +182,10 @@ public class HomeController implements Initializable {
         watchlistBtn.setOnAction(actionEvent -> {
             Parent root = null;
             try {
-                root = FXMLLoader.load(getClass().getResource("watchlist-view.fxml"));
+                ControllerFactory cf = new ControllerFactory();
+                FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource("watchlist-view.fxml"));
+                fxmlLoader.setControllerFactory(cf);
+                root = fxmlLoader.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -239,5 +243,12 @@ public class HomeController implements Initializable {
         alert.setTitle("Something went wrong!");
         alert.setContentText(e.getMessage());
         alert.showAndWait();
+    }
+
+    public static HomeController getInstance() {
+        if(instance == null) {
+            instance = new HomeController();
+        }
+        return instance;
     }
 }

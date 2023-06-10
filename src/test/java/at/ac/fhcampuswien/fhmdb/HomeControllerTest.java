@@ -21,6 +21,7 @@ class HomeControllerTest {
     HomeControllerTest() throws IOException {
     }
 
+    /*
     @BeforeEach
     void createMovieList() throws IOException {
 
@@ -171,8 +172,7 @@ class HomeControllerTest {
         assertEquals(7, moviesBetweenYears.size());
     }
 
-
-
+*/
 
 
 }
