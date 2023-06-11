@@ -51,6 +51,8 @@ public class HomeController implements Initializable {
     private static final Double[] RATING_VALUES = {6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5};
 
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
+
+        /*
         try {
             WatchlistRepository  repo = WatchlistRepository.getInstance();
             repo.addToWatchlist(new WatchlistEntity((Movie) clickedItem));
@@ -58,6 +60,19 @@ public class HomeController implements Initializable {
             displayErrorPopup(dbe);
         }
 
+         */
+
+        try {
+            WatchlistRepository  repo = WatchlistRepository.getInstance();
+            if(repo.isInWatchlist(new WatchlistEntity((Movie) clickedItem))) {
+                showSuccess("Movie already on watchlist!");
+            } else {
+                repo.addToWatchlist(new WatchlistEntity((Movie) clickedItem));
+                showSuccess("Movie successfully added to watchlist!");
+            }
+        } catch(DataBaseException dbe) {
+            displayErrorPopup(dbe);
+        }
     };
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
     private Sorter moviesorter = new Sorter();
@@ -240,4 +255,15 @@ public class HomeController implements Initializable {
         alert.setContentText(e.getMessage());
         alert.showAndWait();
     }
+
+
+    private static void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success!");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+
 }
