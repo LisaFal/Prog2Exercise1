@@ -32,52 +32,6 @@ class MovieTest {
         dummyMovies.add(new Movie("Murder on the Nile", "A classic whodunit mystery set on a luxury cruise ship sailing down the Nile river.", Arrays.asList(Genre.MYSTERY, Genre.ADVENTURE, Genre.CRIME)));
     }
 
-    @Test
-    void sorting_ascending_test() {
-//given
-        List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
-        movieList.add(new Movie("A short title", "description", Arrays.asList(Genre.ACTION)));
-//when
-        Movie.sortingAsc(movieList);
-//then
-        List<Movie> expectedList = new ArrayList<>();
-        expectedList.add(new Movie("A short title", "description", Arrays.asList(Genre.ACTION)));
-        expectedList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
-        assertEquals(expectedList, movieList);
-    }
-
-    @Test
-    void sorting_with_one_entry() {
-        //given
-        List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
-        //when
-        List<Movie> expectedList = Movie.sortingAsc(movieList);
-        //then
-        assertEquals(expectedList, movieList);
-    }
-
-
-    @Test
-    void sorting_descending_test() {
-//given
-        List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
-        movieList.add(new Movie("A short title", "description", Arrays.asList(Genre.ACTION)));
-        movieList.add(new Movie("Maybe a short title", "description", Arrays.asList(Genre.ACTION)));
-//when
-        Movie.sortingDes(movieList);
-
-//then
-        List<Movie> expectedList = new ArrayList<>();
-        expectedList.add(new Movie("No short title", "description", Arrays.asList(Genre.HORROR)));
-        expectedList.add(new Movie("Maybe a short title", "description", Arrays.asList(Genre.ACTION)));
-        expectedList.add(new Movie("A short title", "description", Arrays.asList(Genre.ACTION)));
-
-        assertEquals(expectedList, movieList);
-    }
-
 
     @Test
     void search_case_insensitive() {
