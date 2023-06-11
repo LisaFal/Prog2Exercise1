@@ -91,6 +91,7 @@ public class HomeController implements Initializable {
             try {
                 // add movie data to observable list
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
+                observableMovies.clear();
                 observableMovies.addAll(allMovies);
             } catch (MovieAPIException e) {
               displayErrorPopup(e);

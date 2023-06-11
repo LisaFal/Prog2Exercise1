@@ -62,6 +62,8 @@ public class WatchlistController implements Initializable {
         // Fill the watchlist with movies from db
         try {
             WatchlistRepository repo = WatchlistRepository.getInstance();
+            watchlistMovies.clear();
+            observableMovies.clear();
             watchlistMovies.addAll(repo.getAll().stream().map(we -> new Movie(we)).collect(Collectors.toList()));
             observableMovies.addAll(watchlistMovies);
         } catch (DataBaseException e) {

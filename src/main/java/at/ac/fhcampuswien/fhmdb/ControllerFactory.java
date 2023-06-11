@@ -5,10 +5,10 @@ import javafx.util.Callback;
 public class ControllerFactory implements Callback<Class<?>, Object> {
 
     @Override
-    public Object call(Class<?> param) {
-        if(param.getName().equals("at.ac.fhcampuswien.fhmdb.HomeController")) {
+    public Object call(Class<?> controllerType) {
+        if(controllerType == HomeController.class) {
             return HomeController.getInstance();
-        } else if(param.getName().equals("at.ac.fhcampuswien.fhmdb.WatchlistController")) {
+        } else if(controllerType == WatchlistController.class) {
             return WatchlistController.getInstance();
         }
         return null;
