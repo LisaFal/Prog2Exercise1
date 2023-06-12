@@ -166,8 +166,14 @@ public class HomeController implements Initializable {
                 } else { ratingFrom = -1; }
             try {
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
-                filteredMovies.setAll(moviesorter.sort(allMovies));
-
+                filteredMovies.setAll(allMovies);
+                if(sortBtn.getText().equals("Sort (desc)")) {
+                    sortedMovies.setAll(sortMoviesAscending(new ArrayList<>(filteredMovies)));
+                    observableMovies.setAll(sortedMovies);
+                } else {
+                    sortedMovies.setAll(sortMoviesDescending(new ArrayList<>(filteredMovies)));
+                    observableMovies.setAll(sortedMovies);
+                }
             } catch (MovieAPIException exception) {
                displayErrorPopup(exception);
             }

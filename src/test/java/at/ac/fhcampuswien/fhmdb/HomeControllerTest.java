@@ -21,7 +21,7 @@ class HomeControllerTest {
     HomeControllerTest() throws IOException {
     }
 
-    /*
+
     @BeforeEach
     void createMovieList() throws IOException {
 
@@ -45,6 +45,44 @@ class HomeControllerTest {
 
         dummyMov2.addAll(MovieAPI.fetchMovies(null, null, -1, -1));
     }
+
+    @Test
+    void check_if_movie_sorted_ascending() {
+        // given
+        List<Movie> expectedMovies = new ArrayList<>();
+        expectedMovies.add(new Movie("A Song for Emily", "A heartwarming musical about a young girl who discovers her talent for singing and overcomes adversity to follow her dreams.", Arrays.asList(Genre.MUSICAL, Genre.FAMILY)));
+        expectedMovies.add(new Movie("Lost Treasure of the Amazon", "A team of explorers search for a legendary treasure in the heart of the Amazon jungle, but they soon realize that they are not alone.", Arrays.asList(Genre.ACTION, Genre.HORROR)));
+        expectedMovies.add(new Movie("The Great Escape Room", "A group of strangers must work together to solve a series of puzzles and escape a deadly game created by a twisted mastermind.", Arrays.asList(Genre.THRILLER, Genre.WESTERN)));
+        List<Movie> movies = new ArrayList<>();
+        movies.add(new Movie("Lost Treasure of the Amazon", "A team of explorers search for a legendary treasure in the heart of the Amazon jungle, but they soon realize that they are not alone.", Arrays.asList(Genre.ACTION, Genre.HORROR)));
+        movies.add(new Movie("A Song for Emily", "A heartwarming musical about a young girl who discovers her talent for singing and overcomes adversity to follow her dreams.", Arrays.asList(Genre.MUSICAL, Genre.FAMILY)));
+        movies.add(new Movie("The Great Escape Room", "A group of strangers must work together to solve a series of puzzles and escape a deadly game created by a twisted mastermind.", Arrays.asList(Genre.THRILLER, Genre.WESTERN)));
+
+        // when
+        HomeController hc = new HomeController();
+        movies = hc.sortMoviesAscending(movies);
+        assertEquals(expectedMovies, movies);
+    }
+    @Test
+    void check_if_movie_sorted_descending() {
+        // given
+        List<Movie> expectedMovies = new ArrayList<>();
+        expectedMovies.add(new Movie("The Great Escape Room", "A group of strangers must work together to solve a series of puzzles and escape a deadly game created by a twisted mastermind.", Arrays.asList(Genre.THRILLER, Genre.WESTERN)));
+        expectedMovies.add(new Movie("Lost Treasure of the Amazon", "A team of explorers search for a legendary treasure in the heart of the Amazon jungle, but they soon realize that they are not alone.", Arrays.asList(Genre.ACTION, Genre.HORROR)));
+        expectedMovies.add(new Movie("A Song for Emily", "A heartwarming musical about a young girl who discovers her talent for singing and overcomes adversity to follow her dreams.", Arrays.asList(Genre.MUSICAL, Genre.FAMILY)));
+
+        List<Movie> movies = new ArrayList<>();
+        movies.add(new Movie("Lost Treasure of the Amazon", "A team of explorers search for a legendary treasure in the heart of the Amazon jungle, but they soon realize that they are not alone.", Arrays.asList(Genre.ACTION, Genre.HORROR)));
+        movies.add(new Movie("A Song for Emily", "A heartwarming musical about a young girl who discovers her talent for singing and overcomes adversity to follow her dreams.", Arrays.asList(Genre.MUSICAL, Genre.FAMILY)));
+        movies.add(new Movie("The Great Escape Room", "A group of strangers must work together to solve a series of puzzles and escape a deadly game created by a twisted mastermind.", Arrays.asList(Genre.THRILLER, Genre.WESTERN)));
+
+        // when
+        HomeController hc = new HomeController();
+        movies = hc.sortMoviesDescending(movies);
+        assertEquals(expectedMovies, movies);
+    }
+
+    /*
     @Test
     void filterMovies_empty_textfield_and_no_genre_selected_returns_all_movies() {
         // given
