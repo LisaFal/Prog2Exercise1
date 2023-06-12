@@ -61,4 +61,8 @@ public class WatchlistRepository {
         return instance;
     }
 
+    public static void reset() {
+        instance = null;
+    }
+
 }

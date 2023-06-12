@@ -50,9 +50,9 @@ public class WatchlistController implements Initializable {
 
     };
 
-    private static WatchlistController instance;
+    // private static WatchlistController instance;
 
-    private WatchlistController() {
+    public WatchlistController() {
 
     }
     @Override
@@ -100,10 +100,13 @@ public class WatchlistController implements Initializable {
         alert.showAndWait();
     }
 
+    /*
     public static WatchlistController getInstance() {
         if(instance == null) {
             instance = new WatchlistController();
         }
         return instance;
     }
+
+     */
 }

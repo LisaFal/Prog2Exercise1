@@ -63,9 +63,9 @@ public class HomeController implements Initializable {
     private Sorter moviesorter = new Sorter();
     private ObservableList<Movie> filteredMovies;
     private ObservableList<Movie> sortedMovies;
-    private static HomeController instance;
+    //private static HomeController instance;
 
-    private HomeController() {
+    public HomeController() {
 
     };
 
@@ -246,10 +246,13 @@ public class HomeController implements Initializable {
         alert.showAndWait();
     }
 
+    /*
     public static HomeController getInstance() {
         if(instance == null) {
             instance = new HomeController();
         }
         return instance;
     }
+
+     */
 }
