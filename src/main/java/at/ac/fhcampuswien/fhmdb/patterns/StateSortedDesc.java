@@ -6,7 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class StateSortedDesc implements State {
-    public List<Movie> sort(List<Movie> list) {
+    public List<Movie> sort(List<Movie> list, Sorter sorter) {
+        sorter.setState(new StateSortedAsc());
         list.sort(Comparator.comparing(Movie::getTitle).reversed());
         return list;
     }

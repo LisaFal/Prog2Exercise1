@@ -17,7 +17,7 @@ public class Sorter {
     }
 
     public List<Movie> sort(List<Movie> list) {
-        return currentState.sort(list);
+        return currentState.sort(list, new Sorter());
     }
 
 

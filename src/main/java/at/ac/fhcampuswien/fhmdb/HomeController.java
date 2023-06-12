@@ -84,16 +84,11 @@ public class HomeController implements Initializable {
 
     };
 
-    public List<Movie> getMoviesFromAPI() {
-        moviesorter.setState(new StateNotSorted());
-        return moviesorter.sort(observableMovies);
-    }
-
+//for testcases only
     public List<Movie> sortMoviesAscending(List<Movie> movieList) {
         moviesorter.setState(new StateSortedAsc());
         return moviesorter.sort(new ArrayList<>(movieList));
     }
-
     public List <Movie> sortMoviesDescending(List<Movie> movieList) {
         moviesorter.setState(new StateSortedDesc());
         return moviesorter.sort(new ArrayList<>(movieList));
@@ -115,7 +110,7 @@ public class HomeController implements Initializable {
 
 
         // initialize UI stuff
-        movieListView.setItems((ObservableList) getMoviesFromAPI());   // set data of observable list to list view
+        movieListView.setItems((ObservableList) moviesorter.sort(observableMovies));   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked, "Watchlist")); // use custom cell factory to display data
 
         // adding genre filter items
@@ -166,14 +161,7 @@ public class HomeController implements Initializable {
                 } else { ratingFrom = -1; }
             try {
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
-                filteredMovies.setAll(allMovies);
-                if(sortBtn.getText().equals("Sort (desc)")) {
-                    sortedMovies.setAll(sortMoviesAscending(new ArrayList<>(filteredMovies)));
-                    observableMovies.setAll(sortedMovies);
-                } else {
-                    sortedMovies.setAll(sortMoviesDescending(new ArrayList<>(filteredMovies)));
-                    observableMovies.setAll(sortedMovies);
-                }
+                observableMovies.setAll(moviesorter.sort(allMovies));
             } catch (MovieAPIException exception) {
                displayErrorPopup(exception);
             }
@@ -183,15 +171,15 @@ public class HomeController implements Initializable {
         // Sort button
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
-                filteredMovies = observableMovies;
-                sortedMovies.setAll(sortMoviesAscending(new ArrayList<>(filteredMovies)));
-                observableMovies.setAll(sortedMovies);
-                sortBtn.setText("Sort (desc)");
-            } else {
-                filteredMovies = observableMovies;
-                sortedMovies.setAll(sortMoviesDescending(new ArrayList<>(filteredMovies)));
-                observableMovies.setAll(sortedMovies);
-                sortBtn.setText("Sort (asc)");
+              moviesorter.setState(new StateSortedAsc());
+              sortedMovies.setAll(moviesorter.sort(observableMovies));
+              observableMovies.setAll(sortedMovies);
+              sortBtn.setText("Sort (desc)");
+           } else {
+               moviesorter.setState(new StateSortedDesc());
+               sortedMovies.setAll(moviesorter.sort(observableMovies));
+               observableMovies.setAll(sortedMovies);
+               sortBtn.setText("Sort (asc)");
             }
         });
 

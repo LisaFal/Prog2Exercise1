@@ -8,7 +8,8 @@ import java.util.List;
 public class StateSortedAsc implements State {
 
     @Override
-    public List<Movie> sort(List<Movie> list) {
+    public List<Movie> sort(List<Movie> list, Sorter sorter) {
+        sorter.setState(new StateSortedDesc());
         list.sort(Comparator.comparing(Movie::getTitle));
         return list;
     }
