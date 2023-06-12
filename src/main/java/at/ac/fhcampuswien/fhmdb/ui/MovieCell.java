@@ -129,14 +129,14 @@ public class MovieCell extends ListCell<Movie> {
 
             // layout
             title.fontProperty().set(title.getFont().font(20));
-            detail.setMaxWidth(this.getScene().getWidth() - btn.getWidth() - detailsBtn.getWidth() - 250);
+            detail.setMaxWidth(600);
             detail.setWrapText(true);
             genre.setFont(Font.font("Arial", FontPosture.ITALIC, 10));  //makes genre italic
             HBox.setHgrow(region, Priority.ALWAYS);
             layout.setPadding(new Insets(10));
             layout.spacingProperty().set(10);
             layout.alignmentProperty().set(javafx.geometry.Pos.CENTER_LEFT);
-            layout.setMaxWidth(this.getScene().getWidth() - 30);
+            //layout.setMaxWidth(this.getScene().getWidth() - 30);
             setGraphic(layout);
         }
     }

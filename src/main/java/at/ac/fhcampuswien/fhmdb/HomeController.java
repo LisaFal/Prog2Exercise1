@@ -78,9 +78,10 @@ public class HomeController implements Initializable {
     private Sorter moviesorter = new Sorter();
     private ObservableList<Movie> filteredMovies;
     private ObservableList<Movie> sortedMovies;
-
+    //private static HomeController instance;
 
     public HomeController() {
+
     };
 
     public List<Movie> getMoviesFromAPI() {
@@ -105,6 +106,7 @@ public class HomeController implements Initializable {
             try {
                 // add movie data to observable list
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
+                observableMovies.clear();
                 observableMovies.addAll(allMovies);
             } catch (MovieAPIException e) {
               displayErrorPopup(e);
@@ -196,7 +198,10 @@ public class HomeController implements Initializable {
         watchlistBtn.setOnAction(actionEvent -> {
             Parent root = null;
             try {
-                root = FXMLLoader.load(getClass().getResource("watchlist-view.fxml"));
+                ControllerFactory cf = new ControllerFactory();
+                FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource("watchlist-view.fxml"));
+                fxmlLoader.setControllerFactory(cf);
+                root = fxmlLoader.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -256,14 +261,11 @@ public class HomeController implements Initializable {
         alert.showAndWait();
     }
 
-
     private static void showSuccess(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success!");
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
 
 }

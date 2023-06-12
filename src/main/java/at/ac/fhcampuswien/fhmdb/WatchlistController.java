@@ -52,6 +52,12 @@ public class WatchlistController implements Initializable, Observer {
         }
 
     };
+
+    // private static WatchlistController instance;
+
+    public WatchlistController() {
+
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -60,6 +66,8 @@ public class WatchlistController implements Initializable, Observer {
         // Fill the watchlist with movies from db
         try {
             WatchlistRepository repo = WatchlistRepository.getInstance();
+            watchlistMovies.clear();
+            observableMovies.clear();
             watchlistMovies.addAll(repo.getAll().stream().map(we -> new Movie(we)).collect(Collectors.toList()));
             observableMovies.addAll(watchlistMovies);
         } catch (DataBaseException e) {
@@ -75,7 +83,10 @@ public class WatchlistController implements Initializable, Observer {
 
             Parent root = null;
             try {
-                root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
+                ControllerFactory cf = new ControllerFactory();
+                FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource("home-view.fxml"));
+                fxmlLoader.setControllerFactory(cf);
+                root = fxmlLoader.load();
             } catch (Exception e) {
                 showError(e);
                 return;
@@ -107,6 +118,5 @@ public class WatchlistController implements Initializable, Observer {
         alert.setContentText(e.getMessage());
         alert.showAndWait();
     }
-
 
 }

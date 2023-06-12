@@ -95,5 +95,8 @@ public class WatchlistRepository implements Observable {
         }
     }
 
+    public static void reset() {
+        instance = null;
+    }
 
 }
