@@ -1,16 +1,13 @@
 package at.ac.fhcampuswien.fhmdb.database;
 
-import at.ac.fhcampuswien.fhmdb.models.Movie;
-import at.ac.fhcampuswien.fhmdb.state_pattern.Observable;
-import at.ac.fhcampuswien.fhmdb.state_pattern.Observer;
+import at.ac.fhcampuswien.fhmdb.patterns.Observable;
+import at.ac.fhcampuswien.fhmdb.patterns.Observer;
 import com.j256.ormlite.dao.Dao;
 import exceptions.DataBaseException;
-import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class WatchlistRepository implements Observable {
     private Dao<WatchlistEntity, Long> dao;

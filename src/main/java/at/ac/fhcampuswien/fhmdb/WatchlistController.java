@@ -2,13 +2,12 @@ package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.database.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.database.WatchlistRepository;
-import at.ac.fhcampuswien.fhmdb.state_pattern.Observer;
+import at.ac.fhcampuswien.fhmdb.patterns.Observer;
 import exceptions.DataBaseException;
 
 
 
 import at.ac.fhcampuswien.fhmdb.models.ClickEventHandler;
-import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
@@ -21,13 +20,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;

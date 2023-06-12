@@ -1,7 +1,6 @@
-package at.ac.fhcampuswien.fhmdb.state_pattern;
+package at.ac.fhcampuswien.fhmdb.patterns;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
-import at.ac.fhcampuswien.fhmdb.state_pattern.State;
 
 import java.util.List;
 

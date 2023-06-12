@@ -4,10 +4,10 @@ import at.ac.fhcampuswien.fhmdb.api.MovieAPI;
 import at.ac.fhcampuswien.fhmdb.database.WatchlistEntity;
 import at.ac.fhcampuswien.fhmdb.database.WatchlistRepository;
 import at.ac.fhcampuswien.fhmdb.models.*;
-import at.ac.fhcampuswien.fhmdb.state_pattern.Sorter;
-import at.ac.fhcampuswien.fhmdb.state_pattern.StateNotSorted;
-import at.ac.fhcampuswien.fhmdb.state_pattern.StateSortedAsc;
-import at.ac.fhcampuswien.fhmdb.state_pattern.StateSortedDesc;
+import at.ac.fhcampuswien.fhmdb.patterns.Sorter;
+import at.ac.fhcampuswien.fhmdb.patterns.StateNotSorted;
+import at.ac.fhcampuswien.fhmdb.patterns.StateSortedAsc;
+import at.ac.fhcampuswien.fhmdb.patterns.StateSortedDesc;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -166,14 +166,8 @@ public class HomeController implements Initializable {
                 } else { ratingFrom = -1; }
             try {
                 allMovies = MovieAPI.fetchMovies(query, genre, releaseYear, ratingFrom);
-                filteredMovies.setAll(allMovies);
-                if(sortBtn.getText().equals("Sort (desc)")) {
-                    sortedMovies.setAll(sortMoviesAscending(new ArrayList<>(filteredMovies)));
-                    observableMovies.setAll(sortedMovies);
-                } else {
-                    sortedMovies.setAll(sortMoviesDescending(new ArrayList<>(filteredMovies)));
-                    observableMovies.setAll(sortedMovies);
-                }
+                filteredMovies.setAll(moviesorter.sort(allMovies));
+
             } catch (MovieAPIException exception) {
                displayErrorPopup(exception);
             }
